@@ -1,1 +1,71 @@
 # CSC289 Group 9 Project
+
+## CSC289 Group 9 - Team Members
+
+### Teddy Iversen  
+- **Role**: Project Manager / Scrum Master, UX/UI Developer  
+- **Email**: iaiversen@my.waketech.edu  
+
+### Shawntel Hamilton  
+- **Role**: Frontend Developer  
+- **Email**: shamilton7@my.waketech.edu  
+
+### Jisu Kim  
+- **Role**: Frontend Developer  
+- **Email**: jkim47@my.waketech.edu 
+
+### Sha He  
+- **Role**: Backend Developer  
+- **Email**: shewtcc1@my.waketech.edu 
+
+### Emma Johnson  
+- **Role**: Backend Developer  
+- **Email**: ekjohnson2@my.waketech.edu  
+
+### Tyler Khin  
+- **Role**: QA / Testing  
+- **Email**: tekhin@my.waketech.edu  
+
+
+## Project Setup
+
+1. - Clone the repository:
+   ```
+   git clone https://github.com/tgiversen/CSC289-Group9.git
+   cd CSC289-Group9
+     ```
+
+2. - Install Python (>=3.10) and verify installation
+
+3. - Install dependencies:
+
+4. - Install VS Code (or any editor) and extensions (Python, Flask)
+
+
+## Project name: Spinstorm (Slot Machine Game)
+
+Spinstorm is a casino-style slot machine web application.
+It uses Flask as the backend framework and provides APIs to manage spins, rewards, and user progress.
+The game is powered by a randomized slot machine engine with reels, jackpots, free spins, and daily login rewards.
+This is a full-stack project with frontend + backend + database integration.
+
+### ✅ Features
+
+- User authentication (Register/Login)  
+- Spin reels and generate randomized outcomes  
+- Display spin results (win/loss + payout)  
+- Rewards system:  
+  - Free spins  
+  - Jackpot  
+  - Bonus rewards  
+  - Daily login rewards  
+- Track user progress (XP, level-ups)  
+- Save and display user balance  
+- Reward animations and result UI (Frontend)  
+- System tests for game flow and rewards  
+
+### ✅ Project Type
+
+This is a web-based full-stack application using Flask + Database.
+
+### ✅ File Structure
