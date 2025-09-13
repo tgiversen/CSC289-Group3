@@ -1,0 +1,17 @@
+# Core Flask
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.0.7
+
+# User authentication & forms
+Flask-Login==0.6.3
+Flask-WTF==1.2.1
+Flask-JWT-Extended==4.6.0
+
+# Data validation / serialization
+marshmallow==3.21.2
+marshmallow-sqlalchemy==1.1.0
+
+# Testing
+pytest==8.3.2
+
