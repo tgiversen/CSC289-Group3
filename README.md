@@ -45,7 +45,8 @@ source venv/bin/activate
 Windows:
 ```
 python -m venv venv
-venv\Scripts\activate
+source venv/bin/activate        # Mac/Linux
+venv\Scripts\activate           # Windows
 ```
 
 3. Install Python (>=3.10) and verify installation
@@ -71,7 +72,11 @@ set SECRET_KEY='your-secret-key'   # Replace with a strong key
 ```
 
 6. Database (only after models are created)
-
+```
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+```
 7. Run the application
 ```
 flask run
