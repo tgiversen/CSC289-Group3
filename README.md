@@ -29,18 +29,54 @@
 
 ## Project Setup
 
-1. - Clone the repository:
+1. Clone the repository:
    ```
    git clone https://github.com/tgiversen/CSC289-Group9.git
    cd CSC289-Group9
      ```
 
-2. - Install Python (>=3.10) and verify installation
+2. Create and activate a virtual environment:
+Mac/Linux:
+```
+python3 -m venv venv
+source venv/bin/activate
+```
 
-3. - Install dependencies:
+Windows:
+```
+python -m venv venv
+venv\Scripts\activate
+```
 
-4. - Install VS Code (or any editor) and extensions (Python, Flask)
+3. Install Python (>=3.10) and verify installation
 
+4. Install dependencies:
+```
+pip install -r requirements.txt
+```
+
+5. Set environment variables:
+On Mac/Linux:
+```
+export FLASK_APP=run.py
+export FLASK_ENV=development
+export SECRET_KEY='your-secret-key'   # Replace with a strong key
+```
+
+On Windows:
+```
+set FLASK_APP=run.py
+set FLASK_ENV=development
+set SECRET_KEY='your-secret-key'   # Replace with a strong key
+```
+
+6. Database (only after models are created)
+
+7. Run the application
+```
+flask run
+```
+The app will be available at: http://127.0.0.1:5000
 
 ## Project name: Spinstorm (Slot Machine Game)
 
