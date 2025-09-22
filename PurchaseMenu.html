@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SpinStorm -- Purchase Menu</title>
+        <style>
+                .title {
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                font-size: 100px;
+                font-weight: bold;
+                color: black;
+                border: 4px yellow solid;
+                background-color: yellow;
+                border-radius: 50%;
+                width: 500px;
+                width: 500px;
+            }
+
+            body {
+                justify-content: cemter;
+                align-items: center;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: royalblue;
+            }
+
+            h1 {
+                text-align: center;
+                font-size: 50px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            p {
+                font-size: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="Menu">
+            <h1 class="title">SpinStorm</h1>
+            <h1>Welcome to the Treasure Cove! </h1>
+            <p class="subtitle">Here You Can Purchase In-Game Coins</p>
+            <div class="credit" id="credit">Credit:<br></div>
+            <div class="coins" id="coins">Coins:<br></div>
+            <button class="btn" onclick="addCredit" type="button">Buy credit</button>
+            <button class="btn" onclick="buyCoins" type="button">Buy coins</button>
+        </div>   
+        <script>
+            var credit = 100;
+            var coins = 0;
+
+            function display() {
+                document.getElementById("credit").textContent = `Credit: ${credit} `;
+                document.getElementById("coins").textContent = `Coins: ${coins} `;
+            }
+
+            function addCredit(){
+                credit += 100;
+                display
+            }
+
+            function buyCoins(amount) {
+                if (credit >= amount) {
+                    credit -= amount;
+                    coins += amount;
+                    display();
+                }
+            }
+
+            display();
+        </script>
+    </body>
+</html>
