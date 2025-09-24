@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpinStorm - Login</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4B0082, #1E3A8A);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 20px gold;
+    }
+
+    h1 {
+      color: gold;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: gold;
+      color: purple;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: white;
+      color: gold;
+    }
+
+    .toggle {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .stats {
+      margin-top: 2rem;
+      background: rgba(255, 215, 0, 0.1);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .stats h2 {
+      margin: 0 0 10px;
+      color: gold;
+    }
+
+    .stats p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎰 SpinStorm 🎰</h1>
+    
+    <!-- Login form -->
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- Signup form -->
+    <form id="signupForm" style="display:none;">
+      <input type="text" id="username" placeholder="Username" required><br>
+      <input type="email" id="signupEmail" placeholder="Email" required><br>
+      <input type="password" id="signupPassword" placeholder="Password" required><br>
+      <button type="submit">Create Account</button>
+    </form>
+
+    <div class="toggle">
+      <span id="toggleText">Don’t have an account? <a href="#" id="toggleLink">Sign up</a></span>
+    </div>
+
+    <!-- User Stats Section (visible after login) -->
+    <div class="stats" id="stats" style="display:none;">
+      <h2>Your Stats</h2>
+      <p><strong>High Score:</strong> <span id="highScore">0</span></p>
+      <p><strong>Total Spins:</strong> <span id="totalSpins">0</span></p>
+      <p><strong>Total Points:</strong> <span id="totalPoints">0</span></p>
+    </div>
+  </div>
+
+  <script>
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+  const toggleLink = document.getElementById("toggleLink");
+  const toggleText = document.getElementById("toggleText");
+
+  // Toggle between login & signup
+  toggleLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (loginForm.style.display === "none") {
+      loginForm.style.display = "block";
+      signupForm.style.display = "none";
+      toggleText.innerHTML = `Don’t have an account? <a href="#" id="toggleLink">Sign up</a>`;
+    } else {
+      loginForm.style.display = "none";
+      signupForm.style.display = "block";
+      toggleText.innerHTML = `Already have an account? <a href="#" id="toggleLink">Login</a>`;
+    }
+  });
+
+  // Mock login (replace with backend later)
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    localStorage.setItem("loggedInUser", email);
+
+    // If no stats exist for this user, initialize
+    if (!localStorage.getItem(email)) {
+      localStorage.setItem(email, JSON.stringify({
+        highScore: 0,
+        totalSpins: 0,
+        totalPoints: 1000
+      }));
+    }
+
+    // Redirect to slot machine
+    window.location.href = "index.html";
+  });
+</script>
+
+
+  
+
+</body>
+</html>
