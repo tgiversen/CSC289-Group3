@@ -73,9 +73,10 @@ set SECRET_KEY='dev-secret-key'   # Replace with a strong key
 
 6. Initialize the Database (only after models are created)
 ```
+(you only need to run the last command. ignore the first two commands.)
 flask db init
 flask db migrate -m "Initial migration"
-flask db upgrade
+flask db upgrade (you only need to run the last command.)
 ```
 7. check database
 ```
