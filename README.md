@@ -61,27 +61,36 @@ On Mac/Linux:
 ```
 export FLASK_APP=run.py
 export FLASK_ENV=development
-export SECRET_KEY='your-secret-key'   # Replace with a strong key
+export SECRET_KEY='dev-secret-key'   # Replace with a strong key
 ```
 
 On Windows:
 ```
 set FLASK_APP=run.py
 set FLASK_ENV=development
-set SECRET_KEY='your-secret-key'   # Replace with a strong key
+set SECRET_KEY='dev-secret-key'   # Replace with a strong key
 ```
 
-6. Database (only after models are created)
+6. Initialize the Database (only after models are created)
 ```
 flask db init
 flask db migrate -m "Initial migration"
 flask db upgrade
 ```
-7. Run the application
+7. check database
+```
+sqlite3 instance/site.db
+.tables
+select * from user;
+select * from reward;
+select * from user_reward;
+```
+
+8. Run the application
 ```
 flask run
 ```
-The app will be available at: http://127.0.0.1:5000
+The app will be available at: http://127.0.0.1:5000/api/
 
 ## Project name: Spinstorm (Slot Machine Game)
 

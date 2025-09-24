@@ -2,11 +2,18 @@
 All API routes (Blueprint = main)
 """
 from flask import Blueprint, request, jsonify
-from app.models import db, User
+from app.models import db, User, Reward, UserReward
 from flask_login import login_user, logout_user, login_required
 
 
 main = Blueprint('main', __name__)
+
+# -------------------------
+# Health check route
+# -------------------------
+@main.route('/ping', methods=['GET'])
+def ping():
+    return jsonify({"status": "ok"}), 200
 
 # -------------------------
 # Auth routes
@@ -44,7 +51,10 @@ def logout():
 # Get user balance
 @main.route('/balance/<username>', methods=['GET'])
 def get_balance(username):
-    pass
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"username": user.username, "balance": user.balance, "level": user.level}), 200
 
 # Get user reward history
 @main.route('/rewards/<username>', methods=['GET'])
