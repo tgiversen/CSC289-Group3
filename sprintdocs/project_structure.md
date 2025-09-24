@@ -1,3 +1,6 @@
+- sha he
+- CSC289 - Group 9
+- September 19th, 2025
 # Project Structure：
 ```
 backend/
