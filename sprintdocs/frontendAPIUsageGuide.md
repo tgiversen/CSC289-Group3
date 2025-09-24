@@ -1,3 +1,7 @@
+
+- sha he
+- CSC289 - Group 9
+- September 24th, 2025 updated
 # Frontend API Usage Guide
 
 This document provides the API endpoints and rules that **frontend developers must follow** when integrating with the backend (Flask).
@@ -35,7 +39,7 @@ This document provides the API endpoints and rules that **frontend developers mu
 ### 3. Game
 | Method | Endpoint        | Description | Example Request Body |
 |--------|-----------------|-------------|-----------------------|
-| POST   | `/api/spin`     | Spin the slot machine (bet, result, payout) | `{ "username": "alice", "bet": 50 }` |
+| POST   | `/api/spin`     | Spin the slot machine (bet, result, payout)Handles RNG, win/loss calculation. May trigger **Jackpot** or **Free Spin**. | `{ "username": "alice", "bet": 50 }` |
 
 ---
 
@@ -45,7 +49,23 @@ This document provides the API endpoints and rules that **frontend developers mu
 | POST   | `/api/daily-reward`| Claim daily login reward | `{ "username": "alice" }` |
 | GET    | `/api/rewards`     | List all available rewards | `/api/rewards` |
 
+## 5. Virtual Currency APIs
+
+| Method | Endpoint        | Description |
+|--------|-----------------|-------------|
+| `POST` | `/api/buy-coins` | Buy virtual coins (simulate in-game purchase, increase balance). |
+| `POST` | `/api/exchange`  | Exchange coins for other rewards (optional: could be cosmetic items or bonus spins). |
+
 ---
+
+## System APIs
+
+| Method | Endpoint   | Description |
+|--------|------------|-------------|
+| `GET`  | `/api/ping` | Health check (returns `{ "status": "ok" }`). |
+
+---
+
 
 ## 🔹 Example Workflow
 1. **Register → Login**:  

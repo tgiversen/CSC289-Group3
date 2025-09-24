@@ -81,3 +81,17 @@ def daily_reward():
 @main.route('/rewards', methods=['GET'])
 def list_rewards():
     pass
+
+# -------------------------
+# Virtual Currency routes
+# -------------------------
+
+# Buy virtual coins (simulate in-game purchase, increase balance)
+@main.route('/buy-coins', methods=['POST'])
+def buy_coins():
+    pass
+
+# Exchange coins for other rewards (e.g., bonus spins, cosmetic items)
+@main.route('/exchange', methods=['POST'])
+def exchange():
+    pass

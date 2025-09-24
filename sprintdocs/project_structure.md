@@ -1,6 +1,6 @@
 - sha he
 - CSC289 - Group 9
-- September 19th, 2025
+- September 24th, 2025 updated
 # Project Structure：
 ```
 backend/
@@ -9,12 +9,13 @@ backend/
 │   ├── models.py          # Database models(User, Reward, UserReward)
 │   ├── forms.py           # Form validation(RegisterForm, LoginForm)
 │   ├── routes.py          # All API routes(Blueprint = main)
-│   └── ...
+│   └── game_logic.py      # Slot machine core logic (random number RNG, winning judgment)
 │
 ├── migrations/            # Database migrations(flask db init/migrate/upgrade)
 ├── venv/                  # Virtual environment
 ├── run.py                 # Application entry point
 ├── config.py              # Configuration file (DB URI, SECRET_KEY)
+|── README.md              # Project set up
 └── requirements.txt       # python dependencies
 
 ```
@@ -32,13 +33,15 @@ backend/
 
 ### API Endpoint Overview
 
-| Method | Endpoint                | Description                                |
-|--------|--------------------------|--------------------------------------------|
-| POST   | `/api/register`          | Register a new user (username, email, password) |
-| POST   | `/api/login`             | User login, returns balance info           |
-| POST   | `/api/logout`            | User logout                                |
-| GET    | `/api/balance/<username>`| Get user balance by username               |
-| GET    | `/api/rewards/<username>`| Get a user's reward history                |
-| POST   | `/api/spin`              | Spin the slot machine (bet, result, payout)|
-| POST   | `/api/daily-reward`      | Claim daily login reward                   |
-| GET    | `/api/rewards`           | List all available rewards                 |
+| Method | Endpoint                   | Description                                   | Status   |
+|--------|-----------------------------|-----------------------------------------------|----------|
+| POST   | `/api/register`             | Register a new user (username, email, password) | ✅ Done  |
+| POST   | `/api/login`                | User login, returns balance info               | ✅ Done  |
+| POST   | `/api/logout`               | User logout                                    | ✅ Done  |
+| GET    | `/api/balance/<username>`   | Get user balance by username                   | ✅ Done  |
+| GET    | `/api/rewards/<username>`   | Get a user's reward history                    | ⏳ To Do |
+| POST   | `/api/spin`                 | Spin the slot machine (bet, result, payout)    | ⏳ To Do |
+| POST   | `/api/daily-reward`         | Claim daily login reward                       | ⏳ To Do |
+| GET    | `/api/rewards`              | List all available rewards                     | ⏳ To Do |
+| POST   | `/api/buy-coins`            | Buy virtual coins (increase balance)           | ⏳ To Do |
+| POST   | `/api/exchange`             | Exchange coins for rewards / bonus             | ⏳ To Do |
