@@ -7,7 +7,7 @@ export default function App() {
     <>
       <Navbar />
       <main style={{ padding: 16 }}>
-        <Outlet />
+        <Outlet Login Register/>
       </main>
       <Footer />
     </>
