@@ -10,7 +10,3 @@ class Config:
     SQLALCHEMY_DATABASE_URI = "sqlite:///"+ os.path.join(basedir, "instance", "site.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-# Configuration for testing
-class TestConfig(Config):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'

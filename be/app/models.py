@@ -35,7 +35,7 @@ class User(UserMixin, db.Model):
     level = db.Column(db.Integer, default=1)      # User level (default level 1)
     last_login = db.Column(db.DateTime)           # last login time
     # One-to-many relationship: A user can have many rewards
-    rewards = db.relationship('UserReward', back_populates='user', cascade="all, delete-orphan", lazy=True) 
+    rewards = db.relationship('UserReward', back_populates='user', lazy=True) 
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
