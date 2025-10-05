@@ -19,12 +19,16 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_login import UserMixin
+from sqlalchemy import CheckConstraint
 
 # Initialize SQLAlchemy object (database instance)
 db = SQLAlchemy()
 
 # User table, Store basic user information (account number, balance, level, login time).
 class User(UserMixin, db.Model):
+
+    __tablename__ = "user"
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -33,10 +37,17 @@ class User(UserMixin, db.Model):
     balance = db.Column(db.Integer, default=100)  # Virtual balance (default 100 coins when registering)
     xp = db.Column(db.Integer, default=0)         # Experience points
     level = db.Column(db.Integer, default=1)      # User level (default level 1)
-    last_login = db.Column(db.DateTime)           # last login time
+    free_spins = db.Column(db.Integer, default=0)  # number of available free spins
+    last_login = db.Column(db.DateTime, default=datetime.utcnow)           # last login time
+    
     # One-to-many relationship: A user can have many rewards
-    rewards = db.relationship('UserReward', back_populates='user', lazy=True) 
+    rewards = db.relationship('UserReward', back_populates='user', cascade="all, delete-orphan", lazy=True) 
 
+    # Optional constraint: free spins cannot be negative
+    __table_args__ = (
+        CheckConstraint('free_spins >= 0', name='check_free_spins_non_negative'),
+    )
+    # Password Management
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -46,8 +57,11 @@ class User(UserMixin, db.Model):
 
 # Rewards table (defines the types of rewards, such as daily login, jackpot, free spins)
 class Reward(db.Model):
+
+    __tablename__ = "reward"
+
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(50), nullable=False)    # Reward type (e.g., "daily_login", "jackpot", "free_spin")
+    type = db.Column(db.String(50), unique=True, nullable=False, index=True)    # Reward type (e.g., "daily_login", "jackpot", "free_spin")
     amount = db.Column(db.Integer, nullable=False)     # Reward amount (could be coins or other currency)
     description = db.Column(db.String(200))
     # Timestamp when the reward type was created
@@ -58,6 +72,9 @@ class Reward(db.Model):
 
 # UserReward table (association table).Record the rewards that users have actually received (who, when, and what kind of reward).
 class UserReward(db.Model):
+
+    __tablename__ = "user_reward"
+
     id = db.Column(db.Integer, primary_key=True)
     # Which user claimed this reward
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

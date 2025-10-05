@@ -92,7 +92,7 @@ class GameLogic:
         Returns a spin result and reward (if any).
         """
     # Spin without deducting bet
-        result = GameLogic.gspin_reels()
+        result = GameLogic.spin_reels()
         rewards = GameLogic.check_results(result)
 
         # If win Jackpot reward, increase the reward
