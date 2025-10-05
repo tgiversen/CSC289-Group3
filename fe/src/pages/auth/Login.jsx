@@ -7,7 +7,14 @@ function Login() {
 
     const loginPage = (e) => {
         e.preventDefault();
-        window.location.href = '/Index.html';
+        window.location.href = '/Index.html'; //may change later
+       fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'content-Type': 'application/json'
+            },
+            body: JSON.stringify({email, password}) 
+        })
     };
 
     return (
