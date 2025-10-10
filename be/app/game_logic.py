@@ -95,13 +95,14 @@ def free_spin(balance):
     result = spin_reels()
     rewards = check_results(result)
 
+    # Spin again if they got a free spin (cannot win a free spin from a free spin)
+    while rewards["free_spin"]:
+        result = spin_reels()
+        rewards = check_results(result)
+    
     # If win Jackpot reward, increase the reward
     if rewards["jackpot"]:
         balance += rewards["points"]
-    
-    # If win free spin reward：show message and you can do free spin one time
-    if rewards["free_spin"]:
-        rewards["message"] = "You won a Free Spin!" 
     
     return result, rewards, balance
 
