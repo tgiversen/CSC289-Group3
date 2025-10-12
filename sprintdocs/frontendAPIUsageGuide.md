@@ -90,6 +90,7 @@ The **Virtual Currency System** allows players to manage in-game coins — they 
 
 
 ## 🔹 API Endpoints
+#### BASE_URL="http://127.0.0.1:5000/api"
 
 ### 1. Auth
 | Method | Endpoint         | Description | Example Request Body |

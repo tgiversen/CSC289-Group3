@@ -97,7 +97,7 @@ def get_balance(username):
         }), 404
     return jsonify({
         "status": "success",
-        "msg": "Logged out successfully",
+        "msg": "Get balance successfully",
         "data":{
             "username": user.username, 
             "balance": user.balance, 
@@ -139,6 +139,9 @@ def spin():
 
     # update the balance
     user.balance = new_balance
+    # If the spin rewards include a FREE SPIN, add one
+    if rewards.get("free_spin"):
+        user.free_spins += 1
     db.session.commit()
 
     return jsonify({
@@ -147,7 +150,8 @@ def spin():
         "data": {
             "result": result,
             "rewards": rewards,
-            "new_balance": new_balance
+            "new_balance": new_balance,
+            "remaining_free_spins": user.free_spins
         }
     }), 200
 
@@ -177,6 +181,9 @@ def free_spins():
     # deduct one free spin
     user.free_spins -= 1
     user.balance = new_balance
+    # If the reward includes another FREE SPIN, will not add the free spin to the database to avoid the infinite free spins.
+    #if rewards.get("free_spin"):
+    #    user.free_spins += 1
     db.session.commit()
 
     return jsonify({
@@ -277,8 +284,9 @@ def list_rewards():
 @main.route('/buy-coins', methods=['POST'])
 def buy_coins():
     """
-    The player clicks the “Buy Coins” button on the UI → 
-    a popup appears with purchase amount options (e.g. 100, 500, 1000 coins) → the API is called.
+    The player clicks the “Buy Coins” button on the UI 
+    → a popup appears with purchase amount options (e.g. 100, 500, 1000 coins) 
+    → the API is called.
     Request body example:
     {
         "username": "alice",
