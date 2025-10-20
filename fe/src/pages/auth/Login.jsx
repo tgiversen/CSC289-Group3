@@ -1,21 +1,27 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../stores/authSlice';
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export function Login() {  
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { user, status, error } = useSelector((state) => state.auth)
 
-    const loginPage = (e) => {
+      useEffect(() =>{
+    if (error) {
+        console.error('Please re-enter your email and/or password');
+    }
+    if (user) {
+    useNavigate('/game')
+    }
+    }, [user, status, error, useDispatch, useNavigate]);
+    
+    const loginPage = async (e) => {
         e.preventDefault();
-        window.location.href = '/Index.html'; //may change later
-       fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'content-Type': 'application/json'
-            },
-            body: JSON.stringify({email, password}) 
-        })
+        useDispatch(login({ email, password }))
     };
+
 
     return (
             <div style={{background: 'rgba(0, 0, 0, 0.7', padding: '2rem', borderRadius: '1rem', 
@@ -52,6 +58,7 @@ function Login() {
                 </span> 
             </div>
         </div>
-  )
-}
-export default Login;
+        ) //for return
+}// for login
+
+export default Login; 
