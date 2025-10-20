@@ -93,6 +93,30 @@ flask run
 ```
 The app will be available at: http://127.0.0.1:5000/api/
 
+### Now that the backend is all set up, we need to start the frontend
+
+9. Install [Node.js](https://nodejs.org/en/download)
+*(plaintext: https://nodejs.org/en/download)*
+Follow the instructions on the Node.js website; we need Node.js and npm for the next few steps
+If you already have Node.js installed, skips to the next step
+
+10. Open terminal in **VS Code** (ctrl + `)
+You should be in the project's root directory
+```
+<user>:~/GitHub/CSC289-Group3$
+```
+
+12. Install Vite dependencies
+```
+cd fe
+npm install
+```
+
+12. Run application
+```
+npm run dev
+```
+
 ## Project name: Spinstorm (Slot Machine Game)
 
 Spinstorm is a casino-style slot machine web application.
