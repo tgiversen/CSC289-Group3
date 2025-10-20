@@ -1,14 +1,29 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../stores/regSlice';
+
 
 function Register() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { user, status, error } = useSelector((state) => state.reg)
+    
+    useEffect(() =>{
+        if (error) {
+            console.error('Incorrect email and/or password');
+        }
+        // if (user) {
+        // useNavigate('/login')
+        // }
+        }, [user, status, error, useDispatch, useNavigate]);
 
-  const signupPage = (e) => {
+
+    const signupPage = (e) => {
     e.preventDefault();
-  }
+     useDispatch(register({ email, password, username }))
+    }
 
     return (
         <div style={{background: 'rgba(0, 0, 0, 0.7', padding: '2rem', borderRadius: '1rem', 
@@ -50,6 +65,7 @@ function Register() {
                    </span> 
                 </form>
         </div>
-      )  
-}
-export default Register;
+    ) //for return
+}// for register
+
+export default Register
