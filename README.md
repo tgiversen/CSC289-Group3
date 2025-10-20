@@ -97,8 +97,8 @@ The app will be available at: http://127.0.0.1:5000/api/
 
 9. Install [Node.js](https://nodejs.org/en/download)
 *(plaintext: https://nodejs.org/en/download)*
-Follow the instructions on the Node.js website; we need Node.js and npm for the next few steps
-If you already have Node.js installed, skips to the next step
+Follow the instructions on the Node.js website; we need Node.js and npm for the next few steps.
+If you already have Node.js installed, skip to the next step.
 
 10. Open terminal in **VS Code** (ctrl + `)
 You should be in the project's root directory
