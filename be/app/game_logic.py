@@ -21,6 +21,9 @@ class GameLogic:
     JACKPOT_REWARD_POINTS = 500
     DAILY_REWARD_POINTS = 100                                                                                                                                                                                                                       # Will change later
 
+    #---------------------------------------------
+    # Spin reels (basic random generator)
+    # ---------------------------------------------
     @staticmethod
     def spin_reels():
         """
@@ -31,59 +34,75 @@ class GameLogic:
             result.append(random.choice(GameLogic.SYMBOLS))
         return result
 
+    # ---------------------------------------------
+    # Analyze results and determine rewards
+    # ---------------------------------------------
     @staticmethod
     def check_results(result):
         """
-        Check spin results and determine rewards:
-        - Jackpot (all 3 match)
-        - Free Spin (contains FREE)
+        Determine the result and return the reward information, not responsible for changing the balance.
+        - Jackpot → all 3 symbols are the same.
+        - Free Spin → 'FREE' appears anywhere in the result.
         """
         rewards = {
             "jackpot": False,
             "free_spin": False,
             "points": 0,
-            "message": ""
+            "message": "No win, better luck next time!"
         }
 
-        # Jackpot：same three symbols.
+        # Case 1:Jackpot：same three symbols.
         if len(set(result)) == 1:
             rewards["jackpot"] = True
             rewards["points"] += GameLogic.JACKPOT_REWARD_POINTS
+            rewards["message"] = f"Jackpot! You won {GameLogic.JACKPOT_REWARD_POINTS} points!"
 
-        # Free Spin：the result including "FREE".
-        if "FREE" in result:
+        # Case 2:Free Spin：the result including "FREE".
+        elif "FREE" in result:
             rewards["free_spin"] = True
-
+            rewards["message"] = "You won a Free Spin!"
+        
+        # Case 3: Normal (no win) — keep default message
         return rewards
 
+    # ---------------------------------------------
+    # Paid spin (normal spin with a bet)
+    # ---------------------------------------------
     @staticmethod
     def spin_with_bet(balance, bet):
         """
-        Perform a spin where the user bets coins.
-        Deduct bet from balance unless jackpot or free spin covers it.
+        Perform a paid spin:
+        - Deduct bet from balance.
+        - Spin reels and evaluate result.
+        - Apply jackpot or free spin rewards if applicable.
         Return (result, rewards, new_balance).
         """
+        # Step 1. Check balance
         if bet > balance:
             return None, {"error": "Insufficient balance"}, balance
 
-        # Each spin first deducts the bet
+        # Step 2. Deduct bet
         balance -= bet
 
-        # Then perform a spin after deduct the bet
+        # Step 3. Perform the spin
         result = GameLogic.spin_reels()
+
+        # Step 4. Evaluate result
         rewards = GameLogic.check_results(result)
 
-        # If win Jackpot reward, increase the reward
+        # Step 5. Apply rewards
         if rewards["jackpot"]:
             balance += rewards["points"]
+        # If win free spin reward：show message and you can do free spin one time.
+        elif rewards["free_spin"]:
+            rewards["message"] = "You won a Free Spin! Use it on the Free Spin Button!" 
 
-        # If win free spin reward：show message and you can do free spin one time
-        # Allows an infinite loop of "continuous free spins" now.
-        if rewards["free_spin"]:
-            rewards["message"] = "You won a Free Spin!" 
-
+        #Step 6. Return data to API
         return result, rewards, balance
 
+    # ---------------------------------------------
+    # Free spin (no cost spin)
+    # ---------------------------------------------
     @staticmethod
     def free_spin(balance):
         """
@@ -91,7 +110,7 @@ class GameLogic:
         Grant a free spin to the user (does not reduce balance).
         Returns a spin result and reward (if any).
         """
-    # Spin without deducting bet
+        # Spin without deducting bet
         result = GameLogic.spin_reels()
         rewards = GameLogic.check_results(result)
 
@@ -99,12 +118,13 @@ class GameLogic:
         if rewards["jackpot"]:
             balance += rewards["points"]
         
-        # If win free spin reward：show message and you can do free spin one time
-        if rewards["free_spin"]:
-            rewards["message"] = "You won a Free Spin!" 
+       # # NOTE: Do NOT auto-trigger new free spins — user must click manually.
         
         return result, rewards, balance
 
+    # ---------------------------------------------
+    # Daily login reward
+    # ---------------------------------------------
     @staticmethod
     def daily_login_reward(last_login):
         """
@@ -113,7 +133,7 @@ class GameLogic:
         Returns reward amount or 0 if already claimed.
         """
         today = datetime.now().date()
-    # First time login (no record in DB yet)
+        # First time login (no record in DB yet)
         if not last_login:
             return GameLogic.DAILY_REWARD_POINTS, True
 
