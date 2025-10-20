@@ -14,9 +14,9 @@ function Register() {
         if (error) {
             console.error('Incorrect email and/or password');
         }
-        // if (user) {
-        // useNavigate('/login')
-        // }
+        if (user) {
+        useNavigate('/login')
+        }
         }, [user, status, error, useDispatch, useNavigate]);
 
 
@@ -67,5 +67,6 @@ function Register() {
         </div>
     ) //for return
 }// for register
+
 
 export default Register
