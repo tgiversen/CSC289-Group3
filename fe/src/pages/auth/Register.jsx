@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../stores/regSlice';
+import { register } from '../../stores/regSlice';
 
 const dispatch = useDispatch;
 const navigate = useNavigate;
@@ -70,5 +70,6 @@ function Register() {
         </div>
     ) //for return
 }// for register
+
 
 export default Register
