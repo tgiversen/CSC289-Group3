@@ -1,0 +1,63 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: #020202;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1000;
+}
+
+.main-offset {
+  padding-top: 56px;
+}
+
+.brand {
+  font-size: 28px;
+  background-color: #020202;
+  color: gold;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.brand:hover {
+  color: gold;
+}
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.signout-btn,
+.signin-btn {
+  background-color: #646cff;
+  color: #fbf8ef;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signout-btn:hover,
+.signin-btn:hover {
+  background-color: #fbf8ef; /* hover 시 배경 흰색 */
+  color: #646cff; /* 글자색은 파란색 */
+}

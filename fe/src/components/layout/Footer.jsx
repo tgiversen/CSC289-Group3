@@ -10,7 +10,21 @@ function Footer() {
         color: "#555",
       }}
     >
-      <p>© 2025 SpinStone</p>
+      <p>
+        © 2025 SpinStorm |
+        <a
+          href="https://github.com/tgiversen/CSC289-Group9/tree/main"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: "#646cff",
+            marginLeft: "8px",
+            textDecoration: "none",
+          }}
+        >
+          GitHub Repo
+        </a>
+      </p>
     </footer>
   );
 }

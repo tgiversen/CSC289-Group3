@@ -7,3 +7,4 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {},
 });
+export default gameSlice.reducer;
