@@ -53,20 +53,20 @@ venv\Scripts\activate           # Windows
 
 4. Install dependencies:
 ```
-pip install -r requirements.txt
+pip install -r be/requirements.txt
 ```
 
 5. Set environment variables:
 On Mac/Linux:
 ```
-export FLASK_APP=run.py
+export FLASK_APP=be/run.py
 export FLASK_ENV=development
 export SECRET_KEY='dev-secret-key'   # Replace with a strong key
 ```
 
 On Windows:
 ```
-set FLASK_APP=run.py
+set FLASK_APP=be/run.py
 set FLASK_ENV=development
 set SECRET_KEY='dev-secret-key'   # Replace with a strong key
 ```
