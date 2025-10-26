@@ -1,7 +1,7 @@
 - Sha He
 - CSC289 - Group 9
 - Creation Date: September 19th, 2025
-- Latest Revision: October 12th, 2025
+- Latest Revision: October 26th, 2025
 
 # SpinStorm API Testing Guide
 
@@ -44,7 +44,20 @@ flask run
 
 ## 2️⃣ API Endpoints to Test（You should replace the username alice as your registered username）
 
+**Health Check**
+``` bash
+curl -X GET http://127.0.0.1:5000/api/ping 
+**Expected Response:**
 
+``` json
+{
+  "status": "success",
+  "msg": "ping",
+  "data": {
+    "tatus": "ok"
+  }
+}
+```
 **1. Register new user**
 
 ``` bash
@@ -98,10 +111,13 @@ curl -X GET http://127.0.0.1:5000/api/balance/alice
 
 ```
 **4. spin with bet**
+You may encounter 500 Internal Server Error if you run this command frequently.
+It is most likely SQLite write lock conflict.SQLite is a single-file database and does not support multi-threaded writes.
+If the db.session.commit() call from the previous spin has not yet fully released the file lock, and you initiate a second request almost simultaneously, a 500 error may be briefly displayed. Just wait for a while and rerun this commamd.
 ``` bash
 curl -X POST http://127.0.0.1:5000/api/spin -H "Content-Type: application/json" -d '{"username": "alice", "bet": 10}'
 ```
-**one of Expected Response:**
+**some of Expected Response:**
 ``` json
 {
   "status": "success",
@@ -116,6 +132,23 @@ curl -X POST http://127.0.0.1:5000/api/spin -H "Content-Type: application/json" 
     },
     "new_balance": 90,
     "remaining_free_spins": 1
+  }
+}
+```
+``` json
+{
+  "status": "success",
+  "msg": "Spin result",
+  "data": {
+    "result": ["PLUM","BAR","CHERRY"],
+    "rewards": {
+      "jackpot": false,
+      "free_spin": false,
+      "points": 0,
+      "message": "No win, better luck next time!"
+    },
+    "new_balance": 90,
+    "remaining_free_spins": null
   }
 }
 ```
@@ -175,9 +208,9 @@ curl -X GET http://127.0.0.1:5000/api/rewards
   "status": "success",
   "msg": "Reward list retrieved",
   "data": [
-    {"type": "daily_login", "amount": 100},
-    {"type": "jackpot", "amount": 500},
-    {"type": "free_spin", "amount": 0}
+    {"type": "daily_login", "amount": 100, "description": "Daily login reward"},
+    {"type": "jackpot", "amount": 500, "description":"Match 3 symbols to win jackpot"},
+    {"type": "free_spin", "amount": 0, "description":"Earn a free spin when 'FREE' appears"}
   ]
 }
 ```
@@ -201,11 +234,36 @@ curl -X POST http://127.0.0.1:5000/api/buy-coins \
 ```
 **8. Reward History**
 ``` bash
-TBD
+curl -X GET http://127.0.0.1:5000/api/rewards/alice
 ```
 
 **Expected Response:**
 ``` json
+{
+  "status": "success",
+  "msg": "Reward history for user 'alice' retrieved successfully",
+  "data": [
+    {
+      "reward_type": "daily_login",
+      "amount": 100,
+      "description": "Daily login reward",
+      "claimed_at": "2025-10-26 09:32:12"
+    },
+    {
+      "reward_type": "jackpot",
+      "amount": 500,
+      "description": "Match 3 symbols to win jackpot",
+      "claimed_at": "2025-10-24 15:07:45"
+    },
+    {
+      "reward_type": "free_spin",
+      "amount": 0,
+      "description": "Earn a free spin when 'FREE' appears",
+      "claimed_at": "2025-10-23 18:21:50"
+    }
+  ]
+}
+
 ```
 
 ------------------------------------------------------------------------

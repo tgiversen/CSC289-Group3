@@ -17,7 +17,8 @@ def ping():
     return jsonify({
         "status": "success",
         "msg": "pong",
-        "data": {"status": "ok"}
+        "data": 
+        {"status": "ok"}
     }), 200
 
 # -------------------------
@@ -109,11 +110,51 @@ def get_balance(username):
 # Get user reward history
 @main.route('/rewards/<username>', methods=['GET'])
 def get_rewards(username):
-    # TO DO: query UserReward, and return the user rewards history.
+    """
+    Retrieve the reward history for a given user.
+    Includes reward type, amount, description, and claim timestamp.
+    """
+   # Check if the user exists
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({
+            "status": "error",
+            "msg": f"User '{username}' not found",
+            "data": {}
+        }), 404
+
+    # Query all reward claim records (join UserReward and Reward tables)
+    reward_records = (
+        db.session.query(UserReward)
+        .join(Reward, UserReward.reward_id == Reward.id)
+        .filter(UserReward.user_id == user.id)
+        .order_by(UserReward.claimed_at.desc())
+        .all()
+    )
+
+    # Handle case with no rewards yet
+    if not reward_records:
+        return jsonify({
+            "status": "success",
+            "msg": f"No rewards claimed yet for user '{username}'",
+            "data": []
+        }), 200
+
+    # Serialize results
+    rewards_data = []
+    for record in reward_records:
+        rewards_data.append({
+            "reward_type": record.reward.type,
+            "amount": record.reward.amount,
+            "description": record.reward.description,
+            "claimed_at": record.claimed_at.strftime("%Y-%m-%d %H:%M:%S")
+        })
+
+    # Return successful response
     return jsonify({
         "status": "success",
-        "msg": "Not implemented yet",
-        "data": {}
+        "msg": f"Reward history for user '{username}' retrieved successfully",
+        "data": rewards_data
     }), 200
 
 # -------------------------
@@ -143,6 +184,16 @@ def spin():
     # If the spin rewards include a FREE SPIN, add one
     if rewards.get("free_spin"):
         user.free_spins += 1
+        reward = Reward.query.filter_by(type="free_spin").first()
+        if reward:
+            db.session.add(UserReward(user_id=user.id, reward_id=reward.id))
+
+    # If player hits a jackpot
+    if rewards.get("jackpot"):
+        reward = Reward.query.filter_by(type="jackpot").first()
+        if reward:
+            db.session.add(UserReward(user_id=user.id, reward_id=reward.id))
+
     db.session.commit()
 
     return jsonify({
@@ -183,8 +234,12 @@ def free_spins():
     user.free_spins -= 1
     user.balance = new_balance
     # If the reward includes another FREE SPIN, will not add the free spin to the database to avoid the infinite free spins.
-    #if rewards.get("free_spin"):
-    #    user.free_spins += 1
+    # Do not allow free spin to be obtained from free spin to prevent infinite loops
+    # only Record jackpot reward.
+    if rewards.get("jackpot"):
+        reward = Reward.query.filter_by(type="jackpot").first()
+        if reward:
+            db.session.add(UserReward(user_id=user.id, reward_id=reward.id))
     db.session.commit()
 
     return jsonify({
@@ -207,6 +262,7 @@ def daily_reward():
     data = request.get_json()
     username = data.get("username")
 
+    # Find users
     user = User.query.filter_by(username=username).first()
     if not user:
         return jsonify({
@@ -214,11 +270,18 @@ def daily_reward():
             "msg": "User not found",
             "data": {}
         }), 404
-
+    # Call game logic to calculate rewards
     reward_points, granted = GameLogic.daily_login_reward(user.last_login)
+
     if granted:
+        #Updtae user info.
         user.balance += reward_points
         user.last_login = db.func.now()# update the user new login time
+        # Record user reward history
+        reward = Reward.query.filter_by(type="daily_login").first()
+        if reward:
+            db.session.add(UserReward(user_id=user.id, reward_id=reward.id))
+        # Commit database changes
         db.session.commit()
 
         return jsonify({
