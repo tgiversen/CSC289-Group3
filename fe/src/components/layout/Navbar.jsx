@@ -1,14 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../stores/authSlice";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
   const navigate = useNavigate();
-  const handleSignOut = () => {
-    setIsAuthenticated(false);
-    navigate("/"); // ✅ 홈("/")으로 이동
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => Boolean(state.auth?.user));
+  const handleSignOut = async () => {
+    try {
+      await dispatch(logout());
+      navigate("/");
+    } catch {
+      console.error("Logout failed");
+    }
   };
 
   return (
@@ -18,6 +23,7 @@ export default function Navbar() {
           SpinStorm
         </Link>
       </div>
+
       <div className="navbar-right">
         {isAuthenticated ? (
           <ul className="menu">
@@ -28,7 +34,7 @@ export default function Navbar() {
               <Link to="/account">Account</Link>
             </li>
             <li>
-              <button className="signout-btn" onClick={() => handleSignOut()}>
+              <button className="signout-btn" onClick={handleSignOut}>
                 Sign out
               </button>
             </li>

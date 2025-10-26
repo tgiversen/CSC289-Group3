@@ -101,7 +101,8 @@ def get_balance(username):
         "data":{
             "username": user.username, 
             "balance": user.balance, 
-            "level": user.level
+            "level": user.level,
+            "free_spins": user.free_spins
         }
     }), 200
 

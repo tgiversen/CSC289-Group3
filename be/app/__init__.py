@@ -7,14 +7,28 @@ from flask_migrate import Migrate
 from app.models import db, User
 from app.routes import main
 from config import Config
+from flask_cors import CORS
 
 migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    CORS(
+        app,
+        resources={r"/api/*": {
+            "origins": ["http://localhost:5173", "http://127.0.0.1:5173"]
+        }},
+        supports_credentials=True,
+    )
 
     # Load config from the root-level config.py
     app.config.from_object("config.Config")
+    
+    app.config.update(
+        SECRET_KEY="dev-secret",
+        SESSION_COOKIE_SAMESITE="Lax",
+        SESSION_COOKIE_SECURE=False,
+    )
 
     # Initialize database
     db.init_app(app)
