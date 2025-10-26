@@ -17,7 +17,8 @@ def ping():
     return jsonify({
         "status": "success",
         "msg": "pong",
-        "data": {"status": "ok"}
+        "data": 
+        {"status": "ok"}
     }), 200
 
 # -------------------------

@@ -17,7 +17,8 @@ from datetime import datetime
 class GameLogic:
     # Note: Does not use User object from database or datetime object (Will add later)
     # Slot machine symbols
-    SYMBOLS = ['CHERRY', 'LEMON', 'ORANGE', 'PLUM','BELL', 'BAR', 'SEVEN', 'FREE']
+    #SYMBOLS = ['CHERRY', 'LEMON', 'ORANGE', 'PLUM','BELL', 'BAR', 'SEVEN', 'FREE']
+    SYMBOLS = ['CHERRY', 'LEMON', 'FREE', 'FREE']
     JACKPOT_REWARD_POINTS = 500
     DAILY_REWARD_POINTS = 100                                                                                                                                                                                                                       # Will change later
 
