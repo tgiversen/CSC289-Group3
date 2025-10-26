@@ -95,7 +95,7 @@ curl -X POST http://127.0.0.1:5000/api/spin \
 -d '{"username": "alice", "bet": 10}'
 ```
 **Result:** ✅ Passed (balance deducted, random result returned)  
-⚠️ Note: If `500 Internal Server Error` occurs, it may be due to SQLite write-lock conflict. Re-running resolves it.
+Note: If `500 Internal Server Error` occurs, it may be due to SQLite write-lock conflict. Re-running resolves it.
 
 ---
 
@@ -120,7 +120,7 @@ curl -X POST http://127.0.0.1:5000/api/daily-reward \
 -d '{"username":"alice"}'
 ```
 **Result:** ✅ Passed on first login of the day  
-⚠️ Returns `"Already claimed daily reward today"` if executed again.
+Note: Returns `"Already claimed daily reward today"` if executed again.
 
 ---
 
@@ -146,6 +146,16 @@ curl -X POST http://127.0.0.1:5000/api/buy-coins \
 
 ---
 
+### 3.10 Reward History Endpoint
+**Endpoint:** `/api/rewards/<username> `  
+**Command:**
+```bash
+curl -X GET http://127.0.0.1:5000/api/rewards/alice
+```
+**Result:** ✅ Passed (Working after Reward table initialization.)
+
+---
+
 ## 4. Observations and Notes
 | Observation | Description |
 |--------------|--------------|
@@ -156,7 +166,7 @@ curl -X POST http://127.0.0.1:5000/api/buy-coins \
 
 ---
 
-## 📊 5. Summary of Test Results
+## 5. Summary of Test Results
 | Endpoint | Method | Status | Result |
 |-----------|---------|--------|---------|
 | `/api/ping` | GET | ✅ | Pass |
@@ -168,6 +178,7 @@ curl -X POST http://127.0.0.1:5000/api/buy-coins \
 | `/api/daily-reward` | POST | ✅ | Pass |
 | `/api/rewards` | GET | ✅ | Pass |
 | `/api/buy-coins` | POST | ✅ | Pass |
+| `/api/rewards/<username>` | GET | ✅ | Pass |
 
 ---
 

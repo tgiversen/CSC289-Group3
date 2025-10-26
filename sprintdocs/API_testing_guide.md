@@ -1,7 +1,7 @@
 - Sha He
 - CSC289 - Group 9
 - Creation Date: September 19th, 2025
-- Latest Revision: October 24th, 2025
+- Latest Revision: October 26th, 2025
 
 # SpinStorm API Testing Guide
 
@@ -234,11 +234,36 @@ curl -X POST http://127.0.0.1:5000/api/buy-coins \
 ```
 **8. Reward History**
 ``` bash
-TBD
+curl -X GET http://127.0.0.1:5000/api/rewards/alice
 ```
 
 **Expected Response:**
 ``` json
+{
+  "status": "success",
+  "msg": "Reward history for user 'alice' retrieved successfully",
+  "data": [
+    {
+      "reward_type": "daily_login",
+      "amount": 100,
+      "description": "Daily login reward",
+      "claimed_at": "2025-10-26 09:32:12"
+    },
+    {
+      "reward_type": "jackpot",
+      "amount": 500,
+      "description": "Match 3 symbols to win jackpot",
+      "claimed_at": "2025-10-24 15:07:45"
+    },
+    {
+      "reward_type": "free_spin",
+      "amount": 0,
+      "description": "Earn a free spin when 'FREE' appears",
+      "claimed_at": "2025-10-23 18:21:50"
+    }
+  ]
+}
+
 ```
 
 ------------------------------------------------------------------------
