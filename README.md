@@ -45,38 +45,77 @@ source venv/bin/activate
 Windows:
 ```
 python -m venv venv
-venv\Scripts\activate
+source venv/bin/activate        # Mac/Linux
+venv\Scripts\activate           # Windows
 ```
 
 3. Install Python (>=3.10) and verify installation
 
 4. Install dependencies:
 ```
-pip install -r requirements.txt
+pip install -r be/requirements.txt
 ```
 
 5. Set environment variables:
 On Mac/Linux:
 ```
-export FLASK_APP=run.py
+export FLASK_APP=be/run.py
 export FLASK_ENV=development
-export SECRET_KEY='your-secret-key'   # Replace with a strong key
+export SECRET_KEY='dev-secret-key'   # Replace with a strong key
 ```
 
 On Windows:
 ```
-set FLASK_APP=run.py
+set FLASK_APP=be/run.py
 set FLASK_ENV=development
-set SECRET_KEY='your-secret-key'   # Replace with a strong key
+set SECRET_KEY='dev-secret-key'   # Replace with a strong key
 ```
 
-6. Database (only after models are created)
+6. Initialize the Database (only after models are created)
+```
+(you only need to run the last command. ignore the first two commands.)
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade (you only need to run the last command.)
+```
+7. check database
+```
+sqlite3 instance/site.db
+.tables
+select * from user;
+select * from reward;
+select * from user_reward;
+```
 
-7. Run the application
+8. Run the application
 ```
 flask run
 ```
-The app will be available at: http://127.0.0.1:5000
+The app will be available at: http://127.0.0.1:5000/api/
+
+### Now that the backend is all set up, we need to start the frontend
+
+9. Install [Node.js](https://nodejs.org/en/download)
+*(plaintext: https://nodejs.org/en/download)*
+Follow the instructions on the Node.js website; we need Node.js and npm for the next few steps.
+If you already have Node.js installed, skip to the next step.
+
+10. Open terminal in **VS Code** (ctrl + `)
+You should be in the project's root directory
+```
+<user>:~/GitHub/CSC289-Group3$
+```
+
+12. Install Vite dependencies
+```
+cd fe
+npm install
+```
+
+12. Run application
+```
+npm run dev
+```
 
 ## Project name: Spinstorm (Slot Machine Game)
 

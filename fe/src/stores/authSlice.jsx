@@ -57,6 +57,7 @@ export const authSlice = createSlice({
         state.status = "Loading";
       })
       .addCase(login.fulfilled, (state, action) => {
+<<<<<<< HEAD
         const { msg, username, balance } = action.payload || {};
 
         state.user = username ? { username } : { msg };
@@ -68,6 +69,20 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.status = "Failed";
         state.error = action.payload; 
+=======
+        const { data } = action.payload || {};
+        const { username, balance } = data || {};
+
+        state.user = username ? { username } : null;
+        state.balance = balance || 0;
+        state.status = "Successful";
+
+        localStorage.setItem("user", JSON.stringify({ username, balance }));
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.status = "Failed";
+        state.error = action.payload;
+>>>>>>> main
       })
 
       // logout
