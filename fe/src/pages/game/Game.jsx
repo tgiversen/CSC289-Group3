@@ -1,13 +1,11 @@
 // fe/src/pages/game/Game.jsx
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   spinPost,
-  freeSpinsPost,
   balanceGet,
   dailyRewardPost,
   buyCoinsPost,
-  setBalance,
 } from "../../stores/gameSlice";
 import "./Game.css";
 
@@ -24,31 +22,25 @@ const SYMBOL_EMOJI = {
 
 export default function Game() {
   const dispatch = useDispatch();
-  const { hasSpun, lastResult, rewards, status, error } = useSelector(
-    (s) => s.game
-  );
-  const { balance, freeSpins } = useSelector((s) => s.game);
-  const authUser = useSelector((s) => s.auth?.user);
-  const username =
-    authUser?.username ||
-    JSON.parse(localStorage.getItem("user") || "{}")?.username ||
-    "";
+
+  const {
+    balance,
+    lastResult, // e.g. ["ORANGE","PLUM","BELL"]
+    rewards, // { free_spin, jackpot, message, points }
+    status, // "idle" | "loading" | "succeeded" | "failed"
+    error,
+  } = useSelector((s) => s.game);
+
+  const username = "jisu";
 
   const [bet, setBet] = useState(10);
   const [spinning, setSpinning] = useState(false);
   const isBusy = spinning || status === "loading";
-  const state = useSelector((s) => s.game);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("user") || "{}");
-    if (typeof stored?.balance === "number") {
-      dispatch(setBalance(stored.balance));
-    }
-
-    const name = stored?.username;
-    if (name) dispatch(balanceGet({ username: name }));
-    console.log("Updated game state:", state);
-  }, [dispatch]);
+    if (!username) return;
+    dispatch(balanceGet({ username }));
+  }, [dispatch, username]);
 
   const displayReels = useMemo(() => {
     if (Array.isArray(lastResult) && lastResult.length === 3) {
@@ -57,69 +49,39 @@ export default function Game() {
     return ["🍒", "⭐", "7️⃣"];
   }, [lastResult]);
 
-  const msg =
-    rewards?.message ??
-    (status === "failed"
-      ? String(error || "Something went wrong")
-      : "Good luck! Press SPIN to play.");
+  const msg = rewards?.message
+    ? rewards.message
+    : status === "failed"
+    ? String(error || "Something went wrong")
+    : "Good luck! Press SPIN to play.";
 
-  const handleSpin = useCallback(async () => {
+  const handleSpin = async () => {
     if (isBusy) return;
-    if (!username) return;
     if (bet <= 0) return;
-    if (balance != null && bet > balance) {
-      alert("Not enough balance!");
-      return;
-    }
+    if (balance != null && bet > balance) return;
 
     try {
       setSpinning(true);
       await dispatch(
         spinPost({
           body: { username, bet: Number(bet) },
-          config: { withCredentials: true },
+          config: {},
         })
       );
     } finally {
       setSpinning(false);
     }
-  }, [isBusy, username, bet, balance, dispatch]);
-
-  // Daily Reward
-  const handleDaily = async () => {
-    if (isBusy || !username) return;
-    try {
-      const res = await dispatch(
-        dailyRewardPost({ body: { username } })
-      ).unwrap();
-      const got = res?.data?.reward_points ?? 0;
-      const newBal = res?.data?.balance;
-
-      alert(`✅ Claimed +${got} coins!`);
-      const stored = JSON.parse(localStorage.getItem("user") || "{}");
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ ...stored, balance: newBal })
-      );
-    } catch (err) {
-      alert("⚠️ Already claimed today or not eligible yet.");
-    }
   };
 
-  // Space = Spin, R = Reset
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.code === "Space") {
-        e.preventDefault();
-        handleSpin();
-      } else if (e.key === "r" || e.key === "R") {
-        dispatch(balanceGet({ username }));
-        setBet(10);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [handleSpin, dispatch, username]);
+  const handleDaily = () => {
+    if (isBusy) return;
+    dispatch(dailyRewardPost({ body: { username } }));
+  };
+
+  const handleBuyCoins = (amount = 500) => {
+    if (isBusy) return;
+    dispatch(buyCoinsPost({ body: { username, amount } }));
+  };
 
   return (
     <div
@@ -150,6 +112,7 @@ export default function Game() {
               aria-label={`Reel ${i + 1}`}
             >
               <div className="symbols">
+                {/* 가운데 값이 결과처럼 보이게 3칸 렌더 */}
                 <div className="symbol">{displayReels[i]}</div>
                 <div className="symbol">{displayReels[i]}</div>
                 <div className="symbol">{displayReels[i]}</div>
@@ -171,6 +134,14 @@ export default function Game() {
             – Bet
           </button>
           <button
+            className="btn secondary"
+            onClick={() => setBet((v) => Math.min(500, v + 5))}
+            disabled={isBusy}
+          >
+            + Bet
+          </button>
+
+          <button
             className="btn spin"
             onClick={handleSpin}
             aria-pressed={isBusy ? "true" : "false"}
@@ -179,13 +150,25 @@ export default function Game() {
           >
             {isBusy ? "..." : "SPIN"}
           </button>
+
           <button
             className="btn secondary"
-            onClick={() => setBet((v) => Math.min(500, v + 5))}
+            onClick={handleDaily}
             disabled={isBusy}
           >
-            + Bet
+            Daily Reward
           </button>
+          <button
+            className="btn secondary"
+            onClick={() => handleBuyCoins(500)}
+            disabled={isBusy}
+          >
+            Buy 500
+          </button>
+        </div>
+
+        <div className="meta" aria-hidden="true">
+          Controls: Left = Bet −/+, Center = Spin, Right = Daily/Buy
         </div>
       </div>
 
@@ -199,13 +182,20 @@ export default function Game() {
           </div>
 
           <div style={{ height: 10 }} />
-          <div style={{ height: 10 }} />
-          <div className="panel-title">Last Rewards</div>
-          {hasSpun ? (
+
+          <div className="panel-title">Status</div>
+          <div className="row">
+            <div className="small">State</div>
+            <div className="small">{status}</div>
+          </div>
+
+          {(rewards?.points || rewards?.jackpot || rewards?.free_spin) && (
             <>
+              <div style={{ height: 10 }} />
+              <div className="panel-title">Last Rewards</div>
               <div className="row">
                 <div className="small">Points</div>
-                <div className="small">{rewards.points}</div>
+                <div className="small">{rewards.points || 0}</div>
               </div>
               <div className="row">
                 <div className="small">Jackpot</div>
@@ -218,34 +208,7 @@ export default function Game() {
                 </div>
               </div>
             </>
-          ) : (
-            <div className="empty small" style={{ padding: 8, opacity: 0.8 }}>
-              🎰 No spins yet — try your luck!
-            </div>
           )}
-          <div style={{ height: 20 }} />
-
-          <div className="panel-title">Actions</div>
-          <button
-            className="btn secondary fullwidth"
-            onClick={handleDaily}
-            disabled={isBusy}
-          >
-            💰 Daily Reward
-          </button>
-          <div style={{ marginTop: 12 }}>
-            <div className="small" style={{ marginBottom: 4 }}>
-              Free Spins Remaining: <strong>{freeSpins ?? 0}</strong>
-            </div>
-            <button
-              className="btn secondary fullwidth"
-              onClick={() => dispatch(freeSpinsPost({ body: { username } }))}
-              disabled={status === "loading" || freeSpins <= 0}
-            >
-              {freeSpins > 0 ? "🕹️ Use Free Spin" : "No Free Spins"}
-            </button>
-            <div style={{ marginTop: 12 }}></div>
-          </div>
         </div>
       </aside>
     </div>
