@@ -5,7 +5,7 @@
 # conftest.py: Contains pytest fixtures used for testing
 
 import pytest
-from app import create_app, db
+from app.__init__ import create_app, db
 from config import TestConfig
 from app.models import User
 

@@ -57,7 +57,6 @@ export const authSlice = createSlice({
         state.status = "Loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-<<<<<<< HEAD
         const { msg, username, balance } = action.payload || {};
 
         state.user = username ? { username } : { msg };
@@ -69,8 +68,6 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.status = "Failed";
         state.error = action.payload; 
-=======
->>>>>>> main
       })
 
       // logout
