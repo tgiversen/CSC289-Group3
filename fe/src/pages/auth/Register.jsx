@@ -11,10 +11,14 @@ function Register() {
   const [password, setPassword] = useState("");
   const { user, status, error } = useSelector((state) => state.reg);
 
-  useEffect(() => {
-    if (error) console.error(error);
-    if (user) navigate("/login");
-  }, [user, error, navigate]);
+ useEffect(() => {
+    if (status === "Successful" && user) {
+      console.log("Registration successful:", user);
+      navigate("/login"); // redirect to login after registration
+    } else if (status === "Failed" && error) {
+      console.error("Registration error:", error);
+    }
+  }, [user, status, error, navigate]);
 
   const signupPage = (e) => {
     e.preventDefault();

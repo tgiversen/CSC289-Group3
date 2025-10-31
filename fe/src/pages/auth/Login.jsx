@@ -14,6 +14,7 @@ export function Login() {
     if (error) {
       console.error("Please re-enter your email and/or password");
       {error && <p style={{ color: "red" }}>{error}</p>}
+      window.alert("Please re-enter your email and/or password");
     }
     if (user) {
       navigate("/game");

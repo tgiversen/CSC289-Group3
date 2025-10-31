@@ -15,7 +15,7 @@ export const register = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data || "Registration failed");
     }
   }
 );
