@@ -5,13 +5,14 @@ const api = "http://127.0.0.1:5000/api/";
 
 const initialState = {
   balance: 0,
-  lastResult: [],
+  freeSpins: 0,
   rewards: {
     free_spin: false,
     jackpot: false,
     message: "",
     points: 0,
   },
+  hasSpun: false,
   status: "idle",
   error: null,
 };
@@ -37,7 +38,7 @@ const balanceGet = createAsyncThunk("game/balanceGet", async (data) => {
     .then((res) => res.data);
 });
 
-//Daily Login: POST /api/daily-reward  body: { username }
+//Daily: POST /api/daily-reward  body: { username }
 const dailyRewardPost = createAsyncThunk(
   "game/dailyRewardPost",
   async (data) => {
@@ -66,6 +67,10 @@ export const gameSlice = createSlice({
   name: "gameSlice",
   initialState,
   reducers: {
+    setBalance(state, action) {
+      const n = Number(action.payload);
+      if (!Number.isNaN(n)) state.balance = n;
+    },
     clearLastSpin(state) {
       state.lastSpin = null;
     },
@@ -73,68 +78,107 @@ export const gameSlice = createSlice({
   extraReducers: (builder) => {
     // Spin
     builder
+      .addCase(spinPost.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
       .addCase(spinPost.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { status, msg, data } = action.payload || {};
-        const { new_balance, result, rewards } = data || {};
+        state.hasSpun = true;
+        const p = action.payload?.data || {};
+        const { new_balance, result, rewards } = p;
 
         if (typeof new_balance === "number") state.balance = new_balance;
         if (Array.isArray(result)) state.lastResult = result;
-        if (rewards)
-          state.rewards = {
-            free_spin: !!rewards.free_spin,
-            jackpot: !!rewards.jackpot,
-            message: rewards.message || msg || "",
-            points: Number(rewards.points || 0),
-          };
 
+        state.rewards = {
+          free_spin: !!rewards?.free_spin,
+          jackpot: !!rewards?.jackpot,
+          message: rewards?.message || action.payload?.msg || "",
+          points: Number(rewards?.points || 0),
+        };
         if (state.rewards.jackpot && !state.rewards.message) {
           state.rewards.message = "🎉 JACKPOT!";
         }
-      })
-      .addCase(spinPost.rejected, (state, action) => {
-        state.status = "failed";
-        state.error =
-          typeof action.payload === "string" ? action.payload : "Spin failed";
+
+        const fs = p.remaining_free_spins ?? p.free_spins;
+        if (typeof fs === "number") state.freeSpins = fs;
       });
 
-    // Free Spin
+    // Free spin
     builder.addCase(freeSpinsPost.fulfilled, (state, action) => {
-      const { result, win, winAmount, balance, freeSpins } =
-        action.payload || {};
-      state.lastSpin = { result, win, winAmount };
-      if (typeof balance === "number") state.balance = balance;
-      if (typeof freeSpins === "number") state.freeSpins = freeSpins;
+      const p = action.payload?.data || {};
+      const { result, new_balance, remaining_free_spins, rewards } = p;
+      state.hasSpun = true;
+      if (Array.isArray(result)) state.lastResult = result;
+
+      if (typeof new_balance === "number") {
+        state.balance = new_balance;
+
+        const stored = JSON.parse(localStorage.getItem("user") || "{}");
+        if (stored && stored.username) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...stored, balance: new_balance })
+          );
+        }
+      }
+
+      if (typeof remaining_free_spins === "number") {
+        state.freeSpins = remaining_free_spins;
+      }
+
+      if (rewards) {
+        state.rewards = {
+          free_spin: !!rewards.free_spin,
+          jackpot: !!rewards.jackpot,
+          message: rewards.message || action.payload?.msg || "",
+          points: Number(rewards.points || 0),
+        };
+      } else {
+        state.rewards = {
+          free_spin: false,
+          jackpot: false,
+          message: "",
+          points: 0,
+        };
+      }
+
+      state.status = "succeeded";
     });
 
-    // Balance
+    // Balance GET
     builder.addCase(balanceGet.fulfilled, (state, action) => {
-      const { balance, level, freeSpins } = action.payload || {};
+      const p = action.payload?.data || {};
+      const { balance, level } = p;
+      const fs = p.free_spins;
+
       if (typeof balance === "number") state.balance = balance;
       if (typeof level === "number") state.level = level;
-      if (typeof freeSpins === "number") state.freeSpins = freeSpins;
+      if (typeof fs === "number") state.freeSpins = fs;
     });
 
     // Daily reward
     builder.addCase(dailyRewardPost.fulfilled, (state, action) => {
-      const { balance } = action.payload || {};
-      if (typeof balance === "number") state.balance = balance;
+      const p = action.payload?.data || {};
+      if (typeof p.balance === "number") state.balance = p.balance;
     });
 
     // Buy coins
     builder.addCase(buyCoinsPost.fulfilled, (state, action) => {
-      const { balance } = action.payload || {};
-      if (typeof balance === "number") state.balance = balance;
+      const p = action.payload?.data || {};
+      if (typeof p.new_balance === "number") state.balance = p.new_balance;
     });
 
     // Reward types
     builder.addCase(rewardTypesGet.fulfilled, (state, action) => {
-      state.rewardTypes = Array.isArray(action.payload) ? action.payload : [];
+      const list = action.payload?.data;
+      state.rewardTypes = Array.isArray(list) ? list : [];
     });
   },
 });
 
-export const { clearLastSpin } = gameSlice.actions;
+export const { setBalance, clearLastSpin } = gameSlice.actions;
 export default gameSlice.reducer;
 
 export {
