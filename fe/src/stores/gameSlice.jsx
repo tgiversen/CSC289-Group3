@@ -110,7 +110,6 @@ export const gameSlice = createSlice({
       const p = action.payload?.data || {};
       const { result, new_balance, remaining_free_spins, rewards } = p;
       state.hasSpun = true;
-      console.log(p);
       if (Array.isArray(result)) state.lastResult = result;
 
       if (typeof new_balance === "number") {
