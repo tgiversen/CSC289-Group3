@@ -13,11 +13,13 @@ export function Login() {
   useEffect(() => {
     if (error) {
       console.error("Please re-enter your email and/or password");
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      window.alert("Please re-enter your email and/or password");
     }
     if (user) {
       navigate("/game");
     }
-  }, [user, status, error, useDispatch, useNavigate]);
+  }, [user, status, error, navigate]);
 
   const loginPage = async (e) => {
     e.preventDefault();
@@ -27,12 +29,12 @@ export function Login() {
   return (
     <div
       style={{
-        background: "rgba(0, 0, 0, 0.7",
+        background: "rgba(0, 0, 0, 0.7)",
         padding: "2rem",
         borderRadius: "1rem",
         width: "350px",
         textAlign: "center",
-        boxShadow: "0, 0 20px gold",
+        boxShadow: "0 0 20px gold",
         alignItems: "center",
         justifyContent: "center",
         margin: "0",
