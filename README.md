@@ -117,6 +117,10 @@ npm install
 npm run dev
 ```
 
+The application will be available at http://localhost:5173/
+
+In order for the app to work properly, both the Flask and Vite + React servers must be running simultaneously.
+
 ## Project name: Spinstorm (Slot Machine Game)
 
 Spinstorm is a casino-style slot machine web application.
