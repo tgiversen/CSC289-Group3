@@ -1,12 +1,13 @@
 // fe/src/pages/game/Game.jsx
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   spinPost,
   balanceGet,
   dailyRewardPost,
   buyCoinsPost,
-} from "../../stores/gameSlice";
+} from "../stores/gameSlice";
 import "./Game.css";
 
 const SYMBOL_EMOJI = {
@@ -22,6 +23,7 @@ const SYMBOL_EMOJI = {
 
 export default function Game() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     balance,
@@ -31,16 +33,26 @@ export default function Game() {
     error,
   } = useSelector((s) => s.game);
 
-  const username = "jisu";
+  const username = localStorage.getItem("Username");
 
   const [bet, setBet] = useState(10);
   const [spinning, setSpinning] = useState(false);
   const isBusy = spinning || status === "loading";
 
   useEffect(() => {
-    if (!username) return;
+    if (!username) {
+      navigate("/login");
+      return;
+    }
     dispatch(balanceGet({ username }));
   }, [dispatch, username]);
+
+
+  const logOut = () => {
+    localStorage.removeItem("loggedInUser");
+
+    navigate("/login");
+  }
 
   const displayReels = useMemo(() => {
     if (Array.isArray(lastResult) && lastResult.length === 3) {
@@ -89,6 +101,10 @@ export default function Game() {
       role="application"
       aria-label="SpinStorm slot machine"
     >
+      <div className="logout-user">
+        <button className="logoutButton" onClick={logOut}> Logout</button>
+      </div>
+
       {/* LEFT: Game area */}
       <div className="game-area">
         <div className="header">
@@ -176,6 +192,10 @@ export default function Game() {
       <aside className="side" aria-label="Game info and settings">
         <div className="panel">
           <div className="panel-title">Game Info</div>
+          <div className="user-display">
+            <div className="display"><strong>User</strong></div>
+            <div className="display"><strong>{username || ": "}</strong></div>
+          </div>
           <div className="row">
             <div className="small">Current Bet</div>
             <div className="small">{bet}</div>
