@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../stores/authSlice";
 import gameReducer from "../stores/gameSlice";
-import regReducer from "..stores/regSlice";
+import regReducer from "../stores/regSlice";
+import accountReducer from "../stores/accountSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     reg: regReducer,
     game: gameReducer,
+    account: accountReducer,
   },
 });
