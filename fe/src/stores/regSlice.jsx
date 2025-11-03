@@ -35,11 +35,11 @@ export const regSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.status = "Successful";
-        state.user = action.payload.msg;
+        state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "Failed";
-        state.error = action.payload.error;
+        state.error = action.payload || "Registration failed.";
       });
   },
 });
