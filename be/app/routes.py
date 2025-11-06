@@ -5,6 +5,8 @@ from flask import Blueprint, request, jsonify
 from app.models import db, User, Reward, UserReward
 from flask_login import login_user, logout_user, login_required
 from app.game_logic import GameLogic
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 main = Blueprint('main', __name__)
@@ -143,11 +145,20 @@ def get_rewards(username):
     # Serialize results
     rewards_data = []
     for record in reward_records:
+        if record.claimed_at:
+            # convert UTC → America/New_York
+            claimed_local = record.claimed_at.replace(
+                tzinfo=ZoneInfo("UTC")
+            ).astimezone(ZoneInfo("America/New_York"))
+            claimed_str = claimed_local.strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            claimed_str = None
+
         rewards_data.append({
             "reward_type": record.reward.type,
             "amount": record.reward.amount,
             "description": record.reward.description,
-            "claimed_at": record.claimed_at.strftime("%Y-%m-%d %H:%M:%S")
+            "claimed_at": claimed_str
         })
 
     # Return successful response
@@ -181,14 +192,14 @@ def spin():
 
     # update the balance
     user.balance = new_balance
-    # If the spin rewards include a FREE SPIN, add one
+    # If the spin rewards include a FREE SPIN, add 1 free_spin reward to the record.
     if rewards.get("free_spin"):
         user.free_spins += 1
         reward = Reward.query.filter_by(type="free_spin").first()
         if reward:
             db.session.add(UserReward(user_id=user.id, reward_id=reward.id))
 
-    # If player hits a jackpot
+    # If player hits a jackpot, add jackpot reward to the record.
     if rewards.get("jackpot"):
         reward = Reward.query.filter_by(type="jackpot").first()
         if reward:
@@ -284,20 +295,35 @@ def daily_reward():
         # Commit database changes
         db.session.commit()
 
+        # Convert last_login (after update) to local time for output
+        local_last_login = datetime.utcnow().replace(
+            tzinfo=ZoneInfo("UTC")
+        ).astimezone(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S")
+
         return jsonify({
             "status": "success",
             "msg": "Daily reward claimed" if granted else "Already claimed today",
             "data": {
                 "username": user.username,
                 "reward_points": reward_points,
-                "balance": user.balance
+                "balance": user.balance,
+                "last_login_local": local_last_login
             }
         }), 200
+
+    # Handle "already claimed today"
+    last_login_str = (
+        user.last_login.replace(
+            tzinfo=ZoneInfo("UTC")
+        ).astimezone(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S")
+        if user.last_login
+        else None
+    )
     
     return jsonify({
             "status": "error",
             "msg": "Already claimed daily reward today",
-            "data": {"last_login": user.last_login.strftime("%Y-%m-%d")}
+            "data": {"last_login_local": last_login_str}
         }), 404
 
 # List all available rewards
@@ -330,7 +356,7 @@ def list_rewards():
             "amount": r.amount,
             "description": r.description,
             "created_at": r.created_at.isoformat() if r.created_at else None
-        }
+        } 
         for r in rewards
     ]
 

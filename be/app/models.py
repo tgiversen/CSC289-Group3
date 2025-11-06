@@ -38,7 +38,7 @@ class User(UserMixin, db.Model):
     xp = db.Column(db.Integer, default=0)         # Experience points
     level = db.Column(db.Integer, default=1)      # User level (default level 1)
     free_spins = db.Column(db.Integer, default=0)  # number of available free spins
-    last_login = db.Column(db.DateTime, default=datetime.utcnow)           # last login time
+    last_login = db.Column(db.DateTime, nullable=True)           # last login time
     
     # One-to-many relationship: A user can have many rewards
     rewards = db.relationship('UserReward', back_populates='user', cascade="all, delete-orphan", lazy=True) 

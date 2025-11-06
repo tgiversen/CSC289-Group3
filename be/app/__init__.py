@@ -47,7 +47,7 @@ def create_app():
 
     # Create tables
     with app.app_context():
-        db.create_all()
+        db.create_all();init_rewards()
 
     # Initialize Flask-Migrate
     migrate.init_app(app, db)
@@ -68,17 +68,35 @@ def create_app():
 
 
 def init_rewards():
-    rewards = [
-        Reward(type="daily_login", amount=100, description="Daily login reward"),
-        Reward(
-            type="jackpot", amount=500, description="Match 3 symbols to win jackpot"
-        ),
-        Reward(
-            type="free_spin",
-            amount=0,
-            description="Earn a free spin when 'FREE' appears",
-        ),
-    ]
-    db.session.add_all(rewards)
-    db.session.commit()
-    print("Initialized default rewards.")
+    """
+    Initialize default rewards if they don't exist in the database.
+    Avoids duplicate insertions that cause UNIQUE constraint errors.
+    """
+    try:
+        # Retrieve existing reward types (type field).
+        existing = {r.type for r in Reward.query.all()}
+
+        # Define default reward configuration.
+        default_rewards = [
+            {"type": "daily_login", "amount": 100, "description": "Daily login reward"},
+            {"type": "jackpot", "amount": 500, "description": "Match 3 symbols to win jackpot"},
+            {"type": "free_spin", "amount": 0, "description": "Earn a free spin when 'FREE' appears"},
+        ]
+
+        # Check and insert missing rewards
+        added = []
+        for r in default_rewards:
+            if r["type"] not in existing:
+                db.session.add(Reward(**r))
+                added.append(r["type"])
+
+        db.session.commit()
+
+        if added:
+            print(f"Added new reward types: {', '.join(added)}")
+        else:
+            print("All default reward types already exist. No new rewards added.")
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Failed to initialize rewards: {e}")
