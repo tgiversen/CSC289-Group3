@@ -13,6 +13,7 @@ Rewards include Jackpot points, Free Spins, and Daily Login bonus.
 
 import random
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 class GameLogic:
     # Note: Does not use User object from database or datetime object (Will add later)
@@ -133,13 +134,16 @@ class GameLogic:
         Ensure the user can only claim once per day.
         Returns reward amount or 0 if already claimed.
         """
-        today = datetime.now().date()
-        # First time login (no record in DB yet)
+        # today = datetime.now().date()
+        today_et = datetime.now(ZoneInfo("America/New_York")).date()
+
+        # Allow first-time users to claim reward.
         if not last_login:
             return GameLogic.DAILY_REWARD_POINTS, True
-
+        
         # Compare only the date (ignore time)
-        if last_login.date() < today:
+        last_login_et = (last_login.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo("America/New_York")))
+        if last_login_et.date() < today_et:
             return GameLogic.DAILY_REWARD_POINTS, True
 
         # Already logged in today → no reward
