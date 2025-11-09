@@ -47,7 +47,9 @@ def create_app():
 
     # Create tables
     with app.app_context():
-        db.create_all();init_rewards()
+        db.create_all()
+        if not app.config.get("TESTING", False):
+            init_rewards()
 
     # Initialize Flask-Migrate
     migrate.init_app(app, db)
