@@ -8,7 +8,8 @@ export function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, status, error } = useSelector((state) => state.auth);
+  const { status, error } = useSelector((state) => state.auth);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -16,13 +17,21 @@ export function Login() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       window.alert("Please re-enter your email and/or password");
     }
-    if (user) {
+    if(user)
       navigate("/game");
-    }
-  }, [user, status, error, navigate]);
+    }, [user, status, error, navigate]);
 
   const loginPage = async (e) => {
     e.preventDefault();
+    const registeredUser = JSON.parse(localStorage.getItem("registeredUser"));
+     if (registeredUser && registeredUser.email == email && registeredUser && registeredUser.password == password) {
+      localStorage.setItem("Username", registeredUser.username);
+      setUser(true);
+      navigate("/game");
+     }
+     else {
+      window.alert("Please re-enter your email and/or password");
+      }
     dispatch(login({ email, password }));
   };
 

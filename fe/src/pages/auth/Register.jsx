@@ -22,6 +22,7 @@ function Register() {
 
   const signupPage = (e) => {
     e.preventDefault();
+    localStorage.setItem("registeredUser", JSON.stringify({ username, email, password })) // stores username, email, and password to local storage
     dispatch(register({ username, email, password }));
   };
 
@@ -101,10 +102,15 @@ function Register() {
         >
           Create Account
         </button>
+      </form>
+      {status === "Failed" && (
+        <p style={{ color: "red" }}> {error || "Registration error. Please try again."}
+        </p> )}
+      <div>
         <span>
           Already have an account <Link to="/login">Login</Link>
         </span>
-      </form>
+      </div>
     </div>
   ); //for return
 } // for register
