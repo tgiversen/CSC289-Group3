@@ -1,6 +1,7 @@
 """
 Flask Application & Registering Blueprint
 """
+
 import os
 from flask import Flask
 from flask_login import LoginManager
@@ -11,6 +12,7 @@ from config import Config
 from flask_cors import CORS
 
 migrate = Migrate()
+
 
 def create_app():
     app = Flask(__name__)
@@ -24,15 +26,15 @@ def create_app():
     # CORS configuration
     CORS(
         app,
-        resources={r"/api/*": {
-            "origins": ["http://localhost:5173", "http://127.0.0.1:5173"]
-        }},
+        resources={
+            r"/api/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}
+        },
         supports_credentials=True,
     )
 
     # Load config from the root-level config.py
     app.config.from_object("config.Config")
-    
+
     # Other configuration
     app.config.update(
         SECRET_KEY="dev-secret",
@@ -43,9 +45,15 @@ def create_app():
     # Initialize database
     db.init_app(app)
 
+    # Create tables
+    with app.app_context():
+        db.create_all()
+        if not app.config.get("TESTING", False):
+            init_rewards()
+
     # Initialize Flask-Migrate
     migrate.init_app(app, db)
-            
+
     # Initialize login manager
     login_manager = LoginManager()
     login_manager.init_app(app)
@@ -60,12 +68,37 @@ def create_app():
 
     return app
 
+
 def init_rewards():
-    rewards = [
-        Reward(type="daily_login", amount=100, description="Daily login reward"),
-        Reward(type="jackpot", amount=500, description="Match 3 symbols to win jackpot"),
-        Reward(type="free_spin", amount=0, description="Earn a free spin when 'FREE' appears")
-    ]
-    db.session.add_all(rewards)
-    db.session.commit()
-    print("Initialized default rewards.")
+    """
+    Initialize default rewards if they don't exist in the database.
+    Avoids duplicate insertions that cause UNIQUE constraint errors.
+    """
+    try:
+        # Retrieve existing reward types (type field).
+        existing = {r.type for r in Reward.query.all()}
+
+        # Define default reward configuration.
+        default_rewards = [
+            {"type": "daily_login", "amount": 100, "description": "Daily login reward"},
+            {"type": "jackpot", "amount": 500, "description": "Match 3 symbols to win jackpot"},
+            {"type": "free_spin", "amount": 0, "description": "Earn a free spin when 'FREE' appears"},
+        ]
+
+        # Check and insert missing rewards
+        added = []
+        for r in default_rewards:
+            if r["type"] not in existing:
+                db.session.add(Reward(**r))
+                added.append(r["type"])
+
+        db.session.commit()
+
+        if added:
+            print(f"Added new reward types: {', '.join(added)}")
+        else:
+            print("All default reward types already exist. No new rewards added.")
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Failed to initialize rewards: {e}")

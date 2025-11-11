@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   spinPost,
-  freeSpinsPost,
   balanceGet,
   dailyRewardPost,
   setBalance,
@@ -23,15 +22,16 @@ const SYMBOL_EMOJI = {
 
 export default function Game() {
   const dispatch = useDispatch();
-  const { hasSpun, lastResult, rewards, status, error } = useSelector(
-    (s) => s.game
-  );
-  const { balance, freeSpins } = useSelector((s) => s.game);
-  const authUser = useSelector((s) => s.auth?.user);
-  const username =
-    authUser?.username ||
-    JSON.parse(localStorage.getItem("user") || "{}")?.username ||
-    "";
+
+  const {
+    balance,
+    lastResult, // e.g. ["ORANGE","PLUM","BELL"]
+    rewards, // { free_spin, jackpot, message, points }
+    status, // "idle" | "loading" | "succeeded" | "failed"
+    error,
+  } = useSelector((s) => s.game);
+
+  const username = "jisu";
 
   const [bet, setBet] = useState(10);
   const [animating, setAnimating] = useState(false);
@@ -93,7 +93,7 @@ export default function Game() {
       await dispatch(
         spinPost({
           body: { username, bet: Number(bet) },
-          config: { withCredentials: true },
+          config: {},
         })
       );
     } catch {}
@@ -180,6 +180,14 @@ export default function Game() {
             – Bet
           </button>
           <button
+            className="btn secondary"
+            onClick={() => setBet((v) => Math.min(500, v + 5))}
+            disabled={isBusy}
+          >
+            + Bet
+          </button>
+
+          <button
             className="btn spin"
             onClick={handleSpin}
             aria-pressed={isBusy ? "true" : "false"}
@@ -188,13 +196,25 @@ export default function Game() {
           >
             {isBusy ? "..." : "SPIN"}
           </button>
+
           <button
             className="btn secondary"
-            onClick={() => setBet((v) => Math.min(500, v + 5))}
+            onClick={handleDaily}
             disabled={isBusy}
           >
-            + Bet
+            Daily Reward
           </button>
+          <button
+            className="btn secondary"
+            onClick={() => handleBuyCoins(500)}
+            disabled={isBusy}
+          >
+            Buy 500
+          </button>
+        </div>
+
+        <div className="meta" aria-hidden="true">
+          Controls: Left = Bet −/+, Center = Spin, Right = Daily/Buy
         </div>
       </div>
 
@@ -210,6 +230,8 @@ export default function Game() {
           <div className="panel-title">Last Rewards</div>
           {hasSpun && displayRewards ? (
             <>
+              <div style={{ height: 10 }} />
+              <div className="panel-title">Last Rewards</div>
               <div className="row">
                 <div className="small">Points</div>
                 <div className="small">{displayRewards.points}</div>
@@ -227,10 +249,6 @@ export default function Game() {
                 </div>
               </div>
             </>
-          ) : (
-            <div className="empty small" style={{ padding: 8, opacity: 0.8 }}>
-              🎰 No spins yet — try your luck!
-            </div>
           )}
 
           <div style={{ height: 20 }} />

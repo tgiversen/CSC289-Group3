@@ -5,9 +5,9 @@
 # conftest.py: Contains pytest fixtures used for testing
 
 import pytest
-from app import create_app, db
+from app.__init__ import create_app, db
 from config import TestConfig
-from app.models import User
+from app.models import User, Reward
 
 
 # fixture to start the app in testing mode
@@ -17,6 +17,10 @@ def app():
     app.config["TESTING"] = True
     with app.app_context():
         db.create_all()
+         # Clear the reward table here to avoid unique constraint conflicts.
+        Reward.query.delete()
+        db.session.commit()
+
         yield app
         db.session.remove()
         db.drop_all()  # clean up after test
