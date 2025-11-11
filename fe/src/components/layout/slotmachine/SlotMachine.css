@@ -1,0 +1,41 @@
+.doors {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 12px 0 20px;
+}
+
+.door {
+  background: rgba(255, 255, 255, 0.06);
+  width: 140px;
+  height: 190px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 214, 102, 0.14);
+  box-shadow: 0 10px 30px rgba(10, 6, 20, 0.6),
+    inset 0 -6px 18px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.boxes {
+  will-change: transform;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin: 12px auto;
+  border-radius: 12px;
+  font-size: 40px;
+  color: #fff;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(0, 0, 0, 0.06)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+}
