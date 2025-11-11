@@ -1,4 +1,3 @@
-// fe/src/pages/game/Game.jsx
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,10 +5,10 @@ import {
   freeSpinsPost,
   balanceGet,
   dailyRewardPost,
-  buyCoinsPost,
   setBalance,
 } from "../../stores/gameSlice";
 import "./Game.css";
+import SlotMachine from "../../components/layout/slotmachine/SlotMachine.jsx";
 
 const SYMBOL_EMOJI = {
   CHERRY: "🍒",
@@ -35,57 +34,71 @@ export default function Game() {
     "";
 
   const [bet, setBet] = useState(10);
-  const [spinning, setSpinning] = useState(false);
-  const isBusy = spinning || status === "loading";
-  const state = useSelector((s) => s.game);
+  const [animating, setAnimating] = useState(false);
+  const [spinTrigger, setSpinTrigger] = useState(0);
+  const isBusy = animating || status === "loading";
 
+  const [displayBalance, setDisplayBalance] = useState(balance);
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("user") || "{}");
-    if (typeof stored?.balance === "number") {
-      dispatch(setBalance(stored.balance));
-    }
+    if (!animating) setDisplayBalance(balance);
+  }, [balance, animating]);
 
-    const name = stored?.username;
-    if (name) dispatch(balanceGet({ username: name }));
-    console.log("Updated game state:", state);
-  }, [dispatch]);
+  const [displayRewards, setDisplayRewards] = useState(null);
+  useEffect(() => {
+    if (!animating) setDisplayRewards(rewards);
+  }, [rewards, animating]);
 
-  const displayReels = useMemo(() => {
+  const [displayFreeSpins, setDisplayFreeSpins] = useState(freeSpins);
+  useEffect(() => {
+    if (!animating) setDisplayFreeSpins(freeSpins);
+  }, [freeSpins, animating]);
+
+  const emojiResult = useMemo(() => {
     if (Array.isArray(lastResult) && lastResult.length === 3) {
       return lastResult.map((s) => SYMBOL_EMOJI[s] || "❓");
     }
-    return ["🍒", "⭐", "7️⃣"];
+    return null;
   }, [lastResult]);
 
-  const msg =
-    rewards?.message ??
-    (status === "failed"
-      ? String(error || "Something went wrong")
-      : "Good luck! Press SPIN to play.");
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("user") || "{}");
+    if (typeof stored?.balance === "number")
+      dispatch(setBalance(stored.balance));
+    const name = stored?.username;
+    if (name) dispatch(balanceGet({ username: name }));
+  }, [dispatch]);
+
+  const msg = animating
+    ? "Spinning..."
+    : displayRewards?.message ??
+      (status === "failed"
+        ? String(error || "Something went wrong")
+        : "Good luck! Press SPIN to play.");
 
   const handleSpin = useCallback(async () => {
-    if (isBusy) return;
-    if (!username) return;
-    if (bet <= 0) return;
+    if (isBusy || !username || bet <= 0) return;
     if (balance != null && bet > balance) {
       alert("Not enough balance!");
       return;
     }
 
+    setDisplayBalance(balance);
+    setDisplayRewards(rewards);
+    setDisplayFreeSpins(freeSpins);
+
+    setAnimating(true);
+    setSpinTrigger((t) => t + 1);
+
     try {
-      setSpinning(true);
       await dispatch(
         spinPost({
           body: { username, bet: Number(bet) },
           config: { withCredentials: true },
         })
       );
-    } finally {
-      setSpinning(false);
-    }
-  }, [isBusy, username, bet, balance, dispatch]);
+    } catch {}
+  }, [isBusy, username, bet, balance, rewards, dispatch]);
 
-  // Daily Reward
   const handleDaily = async () => {
     if (isBusy || !username) return;
     try {
@@ -94,21 +107,20 @@ export default function Game() {
       ).unwrap();
       const got = res?.data?.reward_points ?? 0;
       const newBal = res?.data?.balance;
-
       alert(`✅ Claimed +${got} coins!`);
       const stored = JSON.parse(localStorage.getItem("user") || "{}");
       localStorage.setItem(
         "user",
         JSON.stringify({ ...stored, balance: newBal })
       );
-    } catch (err) {
+    } catch {
       alert("⚠️ Already claimed today or not eligible yet.");
     }
   };
 
-  // Space = Spin, R = Reset
   useEffect(() => {
     const onKey = (e) => {
+      if (isBusy) return;
       if (e.code === "Space") {
         e.preventDefault();
         handleSpin();
@@ -119,7 +131,7 @@ export default function Game() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [handleSpin, dispatch, username]);
+  }, [handleSpin, dispatch, username, isBusy]);
 
   return (
     <div
@@ -127,7 +139,6 @@ export default function Game() {
       role="application"
       aria-label="SpinStorm slot machine"
     >
-      {/* LEFT: Game area */}
       <div className="game-area">
         <div className="header">
           <div className="logo">
@@ -135,33 +146,31 @@ export default function Game() {
             <div className="logo-sub">Slot machine</div>
           </div>
 
-          <div className="balance" aria-live="polite">
-            <small>Balance</small>
-            <div className="amt">{(balance ?? 0).toLocaleString()}</div>
+          <div
+            className="balance"
+            aria-live="polite"
+            style={{ opacity: animating ? 0.7 : 1 }}
+          >
+            <small>Balance{animating ? " · · ·" : ""}</small>
+            <div className="amt">{(displayBalance ?? 0).toLocaleString()}</div>
           </div>
         </div>
 
-        {/* Reels */}
         <div className="reel-board">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className={`reel ${spinning ? "spinning" : ""}`}
-              aria-label={`Reel ${i + 1}`}
-            >
-              <div className="symbols">
-                <div className="symbol">{displayReels[i]}</div>
-                <div className="symbol">{displayReels[i]}</div>
-                <div className="symbol">{displayReels[i]}</div>
-              </div>
-            </div>
-          ))}
+          <SlotMachine
+            spinTrigger={spinTrigger}
+            result={emojiResult}
+            onStop={() => {
+              setAnimating(false);
+              setDisplayBalance(balance);
+              setDisplayRewards(rewards);
+              setDisplayFreeSpins(freeSpins);
+            }}
+          />
         </div>
 
-        {/* Message */}
         <div className="message">{msg}</div>
 
-        {/* Controls */}
         <div className="controls" role="region" aria-label="Game controls">
           <button
             className="btn secondary"
@@ -189,9 +198,8 @@ export default function Game() {
         </div>
       </div>
 
-      {/* RIGHT: Side info / settings */}
       <aside className="side" aria-label="Game info and settings">
-        <div className="panel">
+        <div className="panel" style={{ opacity: animating ? 0.8 : 1 }}>
           <div className="panel-title">Game Info</div>
           <div className="row">
             <div className="small">Current Bet</div>
@@ -199,22 +207,23 @@ export default function Game() {
           </div>
 
           <div style={{ height: 10 }} />
-          <div style={{ height: 10 }} />
           <div className="panel-title">Last Rewards</div>
-          {hasSpun ? (
+          {hasSpun && displayRewards ? (
             <>
               <div className="row">
                 <div className="small">Points</div>
-                <div className="small">{rewards.points}</div>
+                <div className="small">{displayRewards.points}</div>
               </div>
               <div className="row">
                 <div className="small">Jackpot</div>
-                <div className="small">{rewards.jackpot ? "Yes 🎉" : "No"}</div>
+                <div className="small">
+                  {displayRewards.jackpot ? "Yes 🎉" : "No"}
+                </div>
               </div>
               <div className="row">
                 <div className="small">Free Spin</div>
                 <div className="small">
-                  {rewards.free_spin ? "Yes 🎁" : "No"}
+                  {displayRewards.free_spin ? "Yes 🎁" : "No"}
                 </div>
               </div>
             </>
@@ -223,8 +232,8 @@ export default function Game() {
               🎰 No spins yet — try your luck!
             </div>
           )}
-          <div style={{ height: 20 }} />
 
+          <div style={{ height: 20 }} />
           <div className="panel-title">Actions</div>
           <button
             className="btn secondary fullwidth"
@@ -234,17 +243,26 @@ export default function Game() {
             💰 Daily Reward
           </button>
           <div style={{ marginTop: 12 }}>
-            <div className="small" style={{ marginBottom: 4 }}>
-              Free Spins Remaining: <strong>{freeSpins ?? 0}</strong>
+            <div
+              className="small"
+              style={{ marginBottom: 4, opacity: animating ? 0.7 : 1 }}
+            >
+              Free Spins Remaining: <strong>{displayFreeSpins ?? 0}</strong>
             </div>
             <button
               className="btn secondary fullwidth"
               onClick={() => dispatch(freeSpinsPost({ body: { username } }))}
-              disabled={status === "loading" || freeSpins <= 0}
+              disabled={
+                isBusy || status === "loading" || (displayFreeSpins ?? 0) <= 0
+              }
+              aria-busy={animating ? "true" : "false"}
+              style={{
+                opacity: animating ? 0.7 : 1,
+                pointerEvents: animating ? "none" : "auto",
+              }}
             >
-              {freeSpins > 0 ? "🕹️ Use Free Spin" : "No Free Spins"}
+              {displayFreeSpins > 0 ? "🕹️ Use Free Spin" : "No Free Spins"}
             </button>
-            <div style={{ marginTop: 12 }}></div>
           </div>
         </div>
       </aside>

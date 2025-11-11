@@ -127,19 +127,6 @@
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
 }
 
-/* Spin animation */
-@keyframes spin {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-100%);
-  }
-}
-.reel.spinning .symbols {
-  animation: spin 0.6s linear infinite;
-}
-
 /* Controls */
 .controls {
   display: flex;
@@ -237,4 +224,23 @@
   .side {
     order: 2;
   }
+}
+.reel.spinning .symbols {
+  animation: spin 1.8s cubic-bezier(0.25, 0.75, 0.5, 1.15) infinite;
+  filter: blur(2px);
+}
+
+@keyframes spin {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-500px); /* 회전 거리 (릴 높이와 맞춰 조정) */
+  }
+}
+
+/* 회전 멈출 때 잔상 제거 */
+.reel:not(.spinning) .symbols {
+  transition: transform 0.8s cubic-bezier(0.25, 0.75, 0.5, 1.15);
+  filter: blur(0);
 }

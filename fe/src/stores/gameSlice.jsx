@@ -17,28 +17,24 @@ const initialState = {
   error: null,
 };
 
-//Spin: POST /api/spin  body: { username, bet }
 const spinPost = createAsyncThunk("game/spinPost", async (data) => {
   return axios.post(`${api}spin`, data.body, data.config).then((res) => {
     return res.data;
   });
 });
 
-//Free Spins: POST /api/free-spins  body: { username }
 const freeSpinsPost = createAsyncThunk("game/freeSpinsPost", async (data) => {
   return axios.post(`${api}free-spins`, data.body, data.config).then((res) => {
     return res.data;
   });
 });
 
-//Balance: GET /api/balance/:username
 const balanceGet = createAsyncThunk("game/balanceGet", async (data) => {
   return axios
     .get(`${api}balance/${encodeURIComponent(data.username)}`, data.config)
     .then((res) => res.data);
 });
 
-//Daily: POST /api/daily-reward  body: { username }
 const dailyRewardPost = createAsyncThunk(
   "game/dailyRewardPost",
   async (data) => {
@@ -50,19 +46,16 @@ const dailyRewardPost = createAsyncThunk(
   }
 );
 
-//Buy Coins: POST /api/buy-coins  body: { username, amount }
 const buyCoinsPost = createAsyncThunk("game/buyCoinsPost", async (data) => {
   return axios.post(`${api}buy-coins`, data.body, data.config).then((res) => {
     return res.data;
   });
 });
 
-//Reward Types: GET /api/rewards
 const rewardTypesGet = createAsyncThunk("game/rewardTypesGet", async (data) => {
-  return axios.get(`${api}rewards`, data?.config).then((res) => res.data); // []
+  return axios.get(`${api}rewards`, data?.config).then((res) => res.data);
 });
 
-/* ---------------- Slice ---------------- */
 export const gameSlice = createSlice({
   name: "gameSlice",
   initialState,
@@ -76,7 +69,6 @@ export const gameSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Spin
     builder
       .addCase(spinPost.pending, (state) => {
         state.status = "loading";
@@ -105,7 +97,6 @@ export const gameSlice = createSlice({
         if (typeof fs === "number") state.freeSpins = fs;
       });
 
-    // Free spin
     builder.addCase(freeSpinsPost.fulfilled, (state, action) => {
       const p = action.payload?.data || {};
       const { result, new_balance, remaining_free_spins, rewards } = p;
@@ -147,7 +138,6 @@ export const gameSlice = createSlice({
       state.status = "succeeded";
     });
 
-    // Balance GET
     builder.addCase(balanceGet.fulfilled, (state, action) => {
       const p = action.payload?.data || {};
       const { balance, level } = p;
@@ -158,19 +148,16 @@ export const gameSlice = createSlice({
       if (typeof fs === "number") state.freeSpins = fs;
     });
 
-    // Daily reward
     builder.addCase(dailyRewardPost.fulfilled, (state, action) => {
       const p = action.payload?.data || {};
       if (typeof p.balance === "number") state.balance = p.balance;
     });
 
-    // Buy coins
     builder.addCase(buyCoinsPost.fulfilled, (state, action) => {
       const p = action.payload?.data || {};
       if (typeof p.new_balance === "number") state.balance = p.new_balance;
     });
 
-    // Reward types
     builder.addCase(rewardTypesGet.fulfilled, (state, action) => {
       const list = action.payload?.data;
       state.rewardTypes = Array.isArray(list) ? list : [];
