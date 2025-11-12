@@ -23,7 +23,6 @@ export const login = createAsyncThunk(
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || "Login failed");
@@ -57,17 +56,18 @@ export const authSlice = createSlice({
         state.status = "Loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        const { msg, username, balance } = action.payload || {};
+        const { data } = action.payload || {};
+        const { username, balance } = data || {};
 
-        state.user = username ? { username } : { msg };
+        state.user = username ? { username } : null;
         state.balance = balance || 0;
         state.status = "Successful";
 
-        localStorage.setItem("user", JSON.stringify(state.user));
+        localStorage.setItem("user", JSON.stringify({ username, balance }));
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "Failed";
-        state.error = action.payload; 
+        state.error = action.payload;
       })
 
       // logout

@@ -99,6 +99,27 @@ export default function Game() {
     } catch {}
   }, [isBusy, username, bet, balance, rewards, dispatch]);
 
+  const handleFreeSpin = useCallback(async () => {
+    if (isBusy || !username) return;
+    if ((freeSpins ?? 0) <= 0) return;
+
+    setDisplayBalance(balance);
+    setDisplayRewards(rewards);
+    setDisplayFreeSpins(freeSpins);
+
+    setAnimating(true);
+    setSpinTrigger((t) => t + 1);
+
+    try {
+      await dispatch(
+        freeSpinsPost({
+          body: { username },
+          config: { withCredentials: true },
+        })
+      );
+    } catch {}
+  }, [isBusy, username, freeSpins, balance, rewards, dispatch]);
+
   const handleDaily = async () => {
     if (isBusy || !username) return;
     try {
@@ -251,7 +272,7 @@ export default function Game() {
             </div>
             <button
               className="btn secondary fullwidth"
-              onClick={() => dispatch(freeSpinsPost({ body: { username } }))}
+              onClick={handleFreeSpin}
               disabled={
                 isBusy || status === "loading" || (displayFreeSpins ?? 0) <= 0
               }
