@@ -11,6 +11,7 @@ export default function Navbar() {
     try {
       await dispatch(logout());
       navigate("/");
+      setTimeout(() => window.location.reload(), 100);
     } catch {
       console.error("Logout failed");
     }
