@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5000/api";
+// const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://127.0.0.1:5000/api";
 
 const savedUser = JSON.parse(localStorage.getItem("user"));
 const initialState = {
@@ -34,7 +35,8 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/logout",
+        //"http://localhost:5000/api/logout",
+        `${API_BASE_URL}/logout`,
         {},
         { withCredentials: true }
       );
