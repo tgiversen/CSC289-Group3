@@ -53,7 +53,7 @@ venv\Scripts\activate           # Windows
 
 4. Install dependencies:
 ```
-pip install -r be/requirements.txt
+pip install -r requirements.txt
 ```
 
 5. Set environment variables:(under **be** folder)
@@ -79,7 +79,7 @@ flask db init
 flask db migrate -m "Initial migration"
 flask db upgrade (you only need to run the last command after we modified the model.py. If no changes with the models.py, no need to run this command.)
 ```
-7. check database
+7. check database(FOR Testing)
 ```
 sqlite3 instance/site.db
 .tables
