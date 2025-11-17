@@ -1,5 +1,5 @@
 - Sha He
-- CSC289 - Group 9
+- CSC289 - Group 3
 - Creation Date: September 26th, 2025
 
 # SpinStorm Backend API Testing Report

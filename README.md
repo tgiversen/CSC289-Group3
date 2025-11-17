@@ -115,7 +115,7 @@ npm install
 
 12. Run application
 ```
-npm run dev
+npm run dev -- --host 127.0.0.1
 ```
 
 The application will be available at http://localhost:5173/

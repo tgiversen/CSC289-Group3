@@ -1,5 +1,5 @@
 - sha he
-- CSC289 - Group 9
+- CSC289 - Group 3
 - September 24th, 2025 updated
 # Project Structure：
 ```
