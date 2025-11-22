@@ -80,7 +80,7 @@ export const authSlice = createSlice({
         state.user = null;
         state.balance = 0;
         state.status = "idle";
-        localStorage.removeItem("user");
+        localStorage.clear();
       })
       .addCase(logout.rejected, (state, action) => {
         state.status = "Failed";

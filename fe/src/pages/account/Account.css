@@ -3,7 +3,6 @@
   --royal-blue: #1e3a8a;
   --gold: #ffd700;
   --gold-dark: #e6b800;
-  --muted: #d0d6e0;
   --card-bg: rgba(255, 255, 255, 0.03);
 }
 
@@ -56,7 +55,7 @@
 h1 {
   font-size: 20px;
   margin: 0;
-  color: var(--muted);
+  color: #f8f9fb;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -89,7 +88,7 @@ h1 {
   text-align: center;
 }
 .stat .label {
-  color: var(--muted);
+  color: #f8f9fb;
   font-size: 13px;
 }
 .stat .value {
@@ -110,7 +109,7 @@ table {
 thead th {
   text-align: left;
   padding: 8px 10px;
-  color: var(--muted);
+  color: #f8f9fb;
   font-size: 13px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -121,7 +120,6 @@ tbody td {
 }
 thead th,
 tbody td {
-  overflow-wrap: anywhere;
   word-break: break-word;
 }
 .side {
@@ -151,16 +149,16 @@ tbody td {
 .btn.secondary {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--muted);
+  color: #f8f9fb;
   font-weight: 600;
 }
 
 .small {
-  color: var(--muted);
+  color: #f8f9fb;
   font-size: 13px;
 }
 .note {
-  color: var(--muted);
+  color: #f8f9fb;
   font-size: 13px;
   margin-top: 10px;
 }
