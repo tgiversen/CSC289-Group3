@@ -115,10 +115,10 @@ npm install
 
 12. Run application
 ```
-npm run dev -- --host 127.0.0.1
+npm run dev (or npm run dev -- --host 127.0.0.1 if the first one doesn't work from your side)
 ```
 
-The application will be available at http://localhost:5173/
+The application will be available at http://localhost:5173/( or http://127.0.0.1:5173/)
 
 In order for the app to work properly, both the Flask and Vite + React servers must be running simultaneously.
 
