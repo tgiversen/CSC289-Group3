@@ -1,0 +1,6 @@
+name: AWS Deployment Workflow
+
+on:
+  push:
+    branches:
+      - sh-branch # If successful should only work on sh-branch
