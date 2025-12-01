@@ -2,7 +2,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const api = "http://127.0.0.1:5000/api/";
+// const api = "http://127.0.0.1:5000/api/";
+// env.VITE_API_BASE_URL = http://127.0.0.1:5000/api or https://<your-aws-domain>/api
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const initialState = {
   rewardsHistory: [],
@@ -15,7 +17,8 @@ export const rewardsHistoryGet = createAsyncThunk(
   async ({ username, config }, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `${api}rewards/${encodeURIComponent(username)}`,
+       // `${api}rewards/${encodeURIComponent(username)}`,
+        `${API_BASE_URL}/rewards/${encodeURIComponent(username)}`,
         config
       );
       return res.data; // { status, msg, data: [...] }

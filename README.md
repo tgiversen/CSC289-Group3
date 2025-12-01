@@ -31,8 +31,8 @@
 
 1. Clone the repository:
    ```
-   git clone https://github.com/tgiversen/CSC289-Group9.git
-   cd CSC289-Group9/be
+   git clone https://github.com/tgiversen/CSC289-Group3.git
+   cd CSC289-Group3/be
      ```
 
 2. Create and activate a virtual environment:
@@ -115,10 +115,11 @@ npm install
 
 12. Run application
 ```
-npm run dev (or npm run dev -- --host 127.0.0.1 if the first one doesn't work from your side)
+<!-- npm run dev (or npm run dev -- --host 127.0.0.1 if the first one doesn't work from your side) -->
+npm run dev -- --host 127.0.0.1
 ```
 
-The application will be available at http://localhost:5173/( or http://127.0.0.1:5173/)
+The application will be available at http://127.0.0.1:5173/
 
 In order for the app to work properly, both the Flask and Vite + React servers must be running simultaneously.
 
