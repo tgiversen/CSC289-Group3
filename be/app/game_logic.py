@@ -131,15 +131,16 @@ class GameLogic:
     def daily_login_reward(last_login):
         """
         Give daily login reward (e.g., 100 points).
+        New users (last_login = None) CANNOT claim reward on the same day they register. They must wait until the next day.
         Ensure the user can only claim once per day.
         Returns reward amount or 0 if already claimed.
         """
         # today = datetime.now().date()
         today_et = datetime.now(ZoneInfo("America/New_York")).date()
 
-        # Allow first-time users to claim reward.
+        # New account → must wait until tomorrow to claim
         if not last_login:
-            return GameLogic.DAILY_REWARD_POINTS, True
+            return 0, False
         
         # Compare only the date (ignore time)
         last_login_et = (last_login.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo("America/New_York")))

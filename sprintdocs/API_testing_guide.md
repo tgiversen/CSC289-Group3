@@ -1,5 +1,5 @@
 - Sha He
-- CSC289 - Group 9
+- CSC289 - Group 3
 - Creation Date: September 19th, 2025
 - Latest Revision: October 26th, 2025
 
