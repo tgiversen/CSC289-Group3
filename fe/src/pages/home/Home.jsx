@@ -30,8 +30,10 @@ export default function Home() {
             <li>
               Press <strong>SPIN</strong>
             </li>
-            <li>Match symbols to win virtual currency</li>
-            <li>Check your highscores in Account</li>
+            <li>Match three identical symbols to win a Jackpot.</li>
+            <li>A gift icon appearing in the center bar awards a Free Spin.</li>
+            <li>Free Spins cannot generate additional Free Spins.</li>
+            <li>Check your highscores in Account.</li>
           </ol>
         </div>
       </aside>
