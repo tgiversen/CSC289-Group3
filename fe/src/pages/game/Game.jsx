@@ -19,6 +19,11 @@ const SYMBOL_EMOJI = {
   BAR: "💎",
   SEVEN: "7️⃣",
   FREE: "🎁",
+  STAR: "⭐",
+  CLOVER: "🍀",
+  GRAPE: "🍇",
+  WATERMELON: "🍉",
+  HORSESHOE: "🐎",
 };
 
 export default function Game() {
@@ -32,8 +37,10 @@ export default function Game() {
     authUser?.username ||
     JSON.parse(localStorage.getItem("user") || "{}")?.username ||
     "";
-
-  const [bet, setBet] = useState(10);
+  const savedBet = parseInt(localStorage.getItem("betAmount")) || 10; 
+  const [showInfo, setShowInfo] = useState(false);
+  const [showDailyInfo, setShowDailyInfo] = useState(false);
+  const [bet, setBet] = useState(savedBet);
   const [animating, setAnimating] = useState(false);
   const [spinTrigger, setSpinTrigger] = useState(0);
   const isBusy = animating || status === "loading";
@@ -135,7 +142,7 @@ export default function Game() {
         JSON.stringify({ ...stored, balance: newBal })
       );
     } catch {
-      alert("⚠️ Already claimed today or not eligible yet.");
+      alert("⚠️ New users cannot claim the reward on the same day they register or already claimed today.");
     }
   };
 
@@ -195,7 +202,13 @@ export default function Game() {
         <div className="controls" role="region" aria-label="Game controls">
           <button
             className="btn secondary"
-            onClick={() => setBet((v) => Math.max(1, v - 5))}
+            onClick={() => 
+              setBet((v) => {
+                const newBet = Math.max(1, v -5);
+                localStorage.setItem("betAmount", newBet);
+                return newBet;
+              })
+            }
             disabled={isBusy}
           >
             – Bet
@@ -211,7 +224,13 @@ export default function Game() {
           </button>
           <button
             className="btn secondary"
-            onClick={() => setBet((v) => Math.min(500, v + 5))}
+            onClick={() => 
+              setBet((v) => {
+              const newBet = Math.min(500, v + 5);
+              localStorage.setItem("betAmount", newBet);
+              return newBet;
+              })
+            }
             disabled={isBusy}
           >
             + Bet
@@ -256,19 +275,31 @@ export default function Game() {
 
           <div style={{ height: 20 }} />
           <div className="panel-title">Actions</div>
-          <button
-            className="btn secondary fullwidth"
-            onClick={handleDaily}
-            disabled={isBusy}
-          >
-            💰 Daily Reward
-          </button>
+          <div className="row">
+            <div className="btn secondary fullwidth">
+              <span>Daily Reward</span>
+              <button
+                className="info-btn"
+                type="button"
+                onClick={() => setShowDailyInfo(true)}
+              >
+                i
+              </button>
+            </div>
+
+            <button className="btn secondary" onClick={handleDaily}>
+              Claim
+            </button>
+          </div>
+          
           <div style={{ marginTop: 12 }}>
             <div
               className="small"
               style={{ marginBottom: 4, opacity: animating ? 0.7 : 1 }}
             >
               Free Spins Remaining: <strong>{displayFreeSpins ?? 0}</strong>
+              <button className="info-btn" onClick={() => setShowInfo(true)}>i</button>
+              
             </div>
             <button
               className="btn secondary fullwidth"
@@ -287,6 +318,38 @@ export default function Game() {
           </div>
         </div>
       </aside>
+      {showInfo && (
+      <div className="info-popup">
+        <div className="info-card">
+          <h4>Free Spin Rules</h4>
+          <ul>
+            <li>Free Spins do not generate more Free Spins.</li>
+            <li>Free Spin wins (including jackpot) are added to your balance.</li>
+            <li>A gift icon in the center bar awards a Free Spin.</li>
+          </ul>
+          <button className="close-btn" onClick={() => setShowInfo(false)}>
+            Close
+          </button>
+        </div>
+      </div>
+    )}
+      {showDailyInfo && (
+      <div className="info-popup">
+        <div className="info-card">
+          <h4>Daily Reward Rules</h4>
+          <ul>
+            <li>New users cannot claim the reward on the same day they register.</li>
+            <li>The first eligible claim starts the next calendar day.</li>
+            <li>You can claim one reward per day.</li>
+            <li>Eligibility resets at <strong>12:00 AM</strong> every day.</li>
+          </ul>
+
+          <button className="close-btn" onClick={() => setShowDailyInfo(false)}>
+            Close
+          </button>
+        </div>
+      </div>
+    )}
     </div>
   );
 }
