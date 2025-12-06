@@ -2,7 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // const API_BASE_URL = "http://localhost:5000/api";
-const API_BASE_URL = "http://127.0.0.1:5000/api";
+// const API_BASE_URL = "http://127.0.0.1:5000/api";
+// env.VITE_API_BASE_URL = http://127.0.0.1:5000/api or https://<your-aws-domain>/api
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const savedUser = JSON.parse(localStorage.getItem("user"));
 const initialState = {
@@ -80,7 +82,7 @@ export const authSlice = createSlice({
         state.user = null;
         state.balance = 0;
         state.status = "idle";
-        localStorage.clear();
+        localStorage.removeItem("user");
       })
       .addCase(logout.rejected, (state, action) => {
         state.status = "Failed";

@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const api = "http://127.0.0.1:5000/api/";
+// const api = "http://127.0.0.1:5000/api/";
+// env.VITE_API_BASE_URL = http://127.0.0.1:5000/api or https://<your-aws-domain>/api
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const initialState = {
   balance: 0,
@@ -18,20 +21,21 @@ const initialState = {
 };
 
 const spinPost = createAsyncThunk("game/spinPost", async (data) => {
-  return axios.post(`${api}spin`, data.body, data.config).then((res) => {
+  // return axios.post(`${api}spin`, data.body, data.config).then((res) => {
+  return axios.post(`${API_BASE_URL}/spin`, data.body, data.config).then((res) => {
     return res.data;
   });
 });
 
 const freeSpinsPost = createAsyncThunk("game/freeSpinsPost", async (data) => {
-  return axios.post(`${api}free-spins`, data.body, data.config).then((res) => {
+  return axios.post(`${API_BASE_URL}/free-spins`, data.body, data.config).then((res) => {
     return res.data;
   });
 });
 
 const balanceGet = createAsyncThunk("game/balanceGet", async (data) => {
   return axios
-    .get(`${api}balance/${encodeURIComponent(data.username)}`, data.config)
+    .get(`${API_BASE_URL}/balance/${encodeURIComponent(data.username)}`, data.config)
     .then((res) => res.data);
 });
 
@@ -39,7 +43,7 @@ const dailyRewardPost = createAsyncThunk(
   "game/dailyRewardPost",
   async (data) => {
     return axios
-      .post(`${api}daily-reward`, data.body, data.config)
+      .post(`${API_BASE_URL}/daily-reward`, data.body, data.config)
       .then((res) => {
         return res.data;
       });
@@ -47,13 +51,13 @@ const dailyRewardPost = createAsyncThunk(
 );
 
 const buyCoinsPost = createAsyncThunk("game/buyCoinsPost", async (data) => {
-  return axios.post(`${api}buy-coins`, data.body, data.config).then((res) => {
+  return axios.post(`${API_BASE_URL}/buy-coins`, data.body, data.config).then((res) => {
     return res.data;
   });
 });
 
 const rewardTypesGet = createAsyncThunk("game/rewardTypesGet", async (data) => {
-  return axios.get(`${api}rewards`, data?.config).then((res) => res.data);
+  return axios.get(`${API_BASE_URL}/rewards`, data?.config).then((res) => res.data);
 });
 
 export const gameSlice = createSlice({
