@@ -31,8 +31,8 @@
 
 1. Clone the repository:
    ```
-   git clone https://github.com/tgiversen/CSC289-Group9.git
-   cd CSC289-Group9
+   git clone https://github.com/tgiversen/CSC289-Group3.git
+   cd CSC289-Group3/be
      ```
 
 2. Create and activate a virtual environment:
@@ -53,32 +53,33 @@ venv\Scripts\activate           # Windows
 
 4. Install dependencies:
 ```
-pip install -r be/requirements.txt
+pip install -r requirements.txt
 ```
 
-5. Set environment variables:
+5. Set environment variables:(under **be** folder)
+
 On Mac/Linux:
-```
-export FLASK_APP=be/run.py
-export FLASK_ENV=development
-export SECRET_KEY='dev-secret-key'   # Replace with a strong key
-```
+  ```
+  export FLASK_APP=run.py
+  export FLASK_ENV=development
+  export SECRET_KEY='dev-secret-key'   # Replace with a strong key
+  ```
 
 On Windows:
-```
-set FLASK_APP=be/run.py
-set FLASK_ENV=development
-set SECRET_KEY='dev-secret-key'   # Replace with a strong key
-```
+  ```
+  set FLASK_APP=be/run.py
+  set FLASK_ENV=development
+  set SECRET_KEY='dev-secret-key'   # Replace with a strong key
+  ```
 
 6. Initialize the Database (only after models are created)
 ```
 (you only need to run the last command. ignore the first two commands.)
 flask db init
 flask db migrate -m "Initial migration"
-flask db upgrade (you only need to run the last command.)
+flask db upgrade (you only need to run the last command after we modified the model.py. If no changes with the models.py, no need to run this command.)
 ```
-7. check database
+7. check database(FOR Testing)
 ```
 sqlite3 instance/site.db
 .tables
@@ -114,10 +115,11 @@ npm install
 
 12. Run application
 ```
-npm run dev
+<!-- npm run dev (or npm run dev -- --host 127.0.0.1 if the first one doesn't work from your side) -->
+npm run dev -- --host 127.0.0.1
 ```
 
-The application will be available at http://localhost:5173/
+The application will be available at http://127.0.0.1:5173/
 
 In order for the app to work properly, both the Flask and Vite + React servers must be running simultaneously.
 

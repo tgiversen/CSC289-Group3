@@ -1,6 +1,6 @@
 
 - sha he
-- CSC289 - Group 9
+- CSC289 - Group 3
 - October 5th, 2025 updated
 
 

@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./be
+    container_name: backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./be:/app
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=your-secret-key
+
+  frontend:
+    build: ./fe
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
