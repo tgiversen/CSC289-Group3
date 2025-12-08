@@ -1,10 +1,13 @@
 # Tyler Khin
 # CSC289 - Group 9
 # Creation Date: September 19th, 2025
-# Latest Revision: October 3rd, 2025
-# test_models.py: Unit tests for database models
+# Latest Revision: December 8th, 2025
+# test_models.py: Unit tests for database models and forms
 
 from app.models import User, Reward, UserReward, db
+import pytest
+from sqlalchemy.exc import IntegrityError
+from app.forms import RegisterForm, LoginForm
 
 
 def test_create_user(app):
@@ -75,10 +78,6 @@ def test_user_reward_claimed_at_set(app):
     assert link.claimed_at is not None
 
 
-import pytest
-from sqlalchemy.exc import IntegrityError
-
-
 def test_unique_username(app):
     u1 = User(username="eve", email="e@example.com")
     u1.set_password("pw")
@@ -87,3 +86,73 @@ def test_unique_username(app):
     db.session.add_all([u1, u2])
     with pytest.raises(IntegrityError):
         db.session.commit()
+
+
+def test_register_form_empty(app):
+    # create form
+    form = RegisterForm()
+
+    # test validation when empty
+    assert form.validate() is False
+
+
+def test_register_form(app):
+    # create form
+    form = RegisterForm()
+
+    # test validation when valid
+    form.username.data = "alice"
+    form.email.data = "a@example.com"
+    form.password.data = "password123"
+    form.confirm_password.data = "password123"
+    assert form.validate() is True
+
+
+def test_register_form_invalid_confirm(app):
+    # create form
+    form = RegisterForm()
+
+    # test validation when password confirmation is invalid
+    form.username.data = "bob"
+    form.email.data = "b@example.com"
+    form.password.data = "password456"
+    form.confirm_password.data = "password123"
+    assert form.validate() is False
+
+
+def test_register_form_invalid_email(app):
+    # create form
+    form = RegisterForm()
+
+    # test validation when email is invalid
+    form.username.data = "bob"
+    form.email.data = "example.com"
+    form.password.data = "password456"
+    form.confirm_password.data = "password456"
+    assert form.validate() is False
+
+
+def test_login_form_empty(app):
+    # create form
+    form = LoginForm()
+
+    # test validation when empty
+    assert form.validate() is False
+
+
+def test_login_form(app):
+    # create form
+    form = LoginForm()
+    # test validation when valid
+    form.email.data = "a@example.com"
+    form.password.data = "password123"
+    assert form.validate() is True
+
+
+def test_login_form_invalid_email(app):
+    # create form
+    form = LoginForm()
+    # test validation when email is invalid
+    form.email.data = "example.com"
+    form.password.data = "password456"
+    assert form.validate() is False
