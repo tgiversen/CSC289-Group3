@@ -224,7 +224,7 @@ export default function Game() {
           <div className="panel-title">Game Info</div>
           <div className="row">
             <div className="small">Current Bet</div>
-            <div className="small">{bet}</div>
+            <div className="small" data-testid="bet-amount">{bet}</div>
           </div>
 
           <div style={{ height: 10 }} />

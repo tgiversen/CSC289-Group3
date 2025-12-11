@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coverage Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0; }
+        .status { font-size: 2.5em; font-weight: bold; margin: 0; }
+        .coverage-percentage { font-size: 3em; font-weight: bold; color: #28a745; }
+        .content { padding: 30px; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .metric { background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; }
+        .metric-value { font-size: 2em; font-weight: bold; color: #495057; }
+        .metric-label { color: #6c757d; margin-top: 5px; }
+        .section { margin-bottom: 30px; }
+        .section h2 { color: #495057; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+        .coverage-bar { background: #e9ecef; border-radius: 4px; overflow: hidden; margin: 5px 0; }
+        .coverage-fill { height: 20px; background: linear-gradient(90deg, #28a745, #20c997); transition: width 0.3s ease; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e9ecef; }
+        th { background: #f8f9fa; font-weight: 600; }
+        .priority-high { color: #dc3545; font-weight: bold; }
+        .priority-medium { color: #ffc107; font-weight: bold; }
+        .priority-low { color: #6c757d; }
+        .code { background: #f8f9fa; padding: 2px 6px; border-radius: 3px; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.9em; }
+        .recommendation { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; padding: 15px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="status">PASS</h1>
+            <div class="coverage-percentage">6%</div>
+            <p>Coverage across all test files</p>
+        </div>
+
+        <div class="content">
+            <div class="summary">
+                <div class="metric">
+                    <div class="metric-value">17</div>
+                    <div class="metric-label">Total Elements</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">1</div>
+                    <div class="metric-label">Covered Elements</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">16</div>
+                    <div class="metric-label">Uncovered Elements</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2</div>
+                    <div class="metric-label">Test Files</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Coverage by Element Type</h2>
+                
+                    <div style="margin: 15px 0;">
+                        <strong>input:</strong> 0% (0/2)
+                        <div class="coverage-bar">
+                            <div class="coverage-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                
+                    <div style="margin: 15px 0;">
+                        <strong>interactive-element:</strong> 0% (0/12)
+                        <div class="coverage-bar">
+                            <div class="coverage-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                
+                    <div style="margin: 15px 0;">
+                        <strong>clickable-element:</strong> 33% (1/3)
+                        <div class="coverage-bar">
+                            <div class="coverage-fill" style="width: 33%"></div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            <div class="section">
+                <h2>High Priority Uncovered Elements</h2>
+                <p>No high priority uncovered elements found! 🎉</p>
+            </div>
+
+            <div class="section">
+                <h2>All Uncovered Elements</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Selector</th>
+                            <th>Type</th>
+                            <th>Text</th>
+                            <th>Priority</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr>
+                                <td><span class="code">email</span></td>
+                                <td>input</td>
+                                <td>email</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "email" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">password</span></td>
+                                <td>input</td>
+                                <td>password</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "password" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Login</span></td>
+                                <td>interactive-element</td>
+                                <td>Login</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Login" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">– Bet</span></td>
+                                <td>interactive-element</td>
+                                <td>– Bet</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "– Bet" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Spin button</span></td>
+                                <td>interactive-element</td>
+                                <td>Spin button</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Spin button" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Sign In</span></td>
+                                <td>interactive-element</td>
+                                <td>Sign In</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Sign In" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Sign out</span></td>
+                                <td>interactive-element</td>
+                                <td>Sign out</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Sign out" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Register</span></td>
+                                <td>interactive-element</td>
+                                <td>Register</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Register" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">.amt</span></td>
+                                <td>clickable-element</td>
+                                <td>.amt</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element ".amt" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">🎰 No spins yet — try your luck!</span></td>
+                                <td>interactive-element</td>
+                                <td>🎰 No spins yet — try your luck!</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "🎰 No spins yet — try your luck!" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">🕹️ Use Free Spin</span></td>
+                                <td>interactive-element</td>
+                                <td>🕹️ Use Free Spin</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "🕹️ Use Free Spin" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">bet-amount</span></td>
+                                <td>clickable-element</td>
+                                <td>bet-amount</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "bet-amount" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">+ Bet</span></td>
+                                <td>interactive-element</td>
+                                <td>+ Bet</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "+ Bet" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Game</span></td>
+                                <td>interactive-element</td>
+                                <td>Game</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Game" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">Account</span></td>
+                                <td>interactive-element</td>
+                                <td>Account</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "Account" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td><span class="code">SpinStorm</span></td>
+                                <td>interactive-element</td>
+                                <td>SpinStorm</td>
+                                <td><span class="priority-low">LOW</span></td>
+                                <td>Interactive element "SpinStorm" is not tested. Consider adding test coverage.</td>
+                            </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

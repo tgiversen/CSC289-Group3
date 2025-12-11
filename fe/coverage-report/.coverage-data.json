@@ -1,0 +1,915 @@
+{
+  "records": {
+    "email-input": {
+      "selector": "email",
+      "type": "input",
+      "text": "email",
+      "firstSeenAt": 1765450314395,
+      "lastSeenAt": 1765451737027,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:21",
+          "timestamp": 1765450314395,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:24",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:21",
+          "timestamp": 1765450486359,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:24",
+          "timestamp": 1765450486361,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:21",
+          "timestamp": 1765450712404,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:24",
+          "timestamp": 1765450712407,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:21",
+          "timestamp": 1765451105498,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:24",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:25",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:26",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:21",
+          "timestamp": 1765451737024,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:24",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:25",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:26",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "password-input": {
+      "selector": "password",
+      "type": "input",
+      "text": "password",
+      "firstSeenAt": 1765450314395,
+      "lastSeenAt": 1765451737027,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:22",
+          "timestamp": 1765450314395,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:25",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:22",
+          "timestamp": 1765450486359,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:25",
+          "timestamp": 1765450486361,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:22",
+          "timestamp": 1765450712404,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:25",
+          "timestamp": 1765450712407,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:22",
+          "timestamp": 1765451105498,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:28",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:29",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:30",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:22",
+          "timestamp": 1765451737024,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:28",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:29",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:30",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Login-interactive-element": {
+      "selector": "Login",
+      "type": "interactive-element",
+      "text": "Login",
+      "firstSeenAt": 1765450314395,
+      "lastSeenAt": 1765451737027,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:23",
+          "timestamp": 1765450314395,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:28",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:23",
+          "timestamp": 1765450486359,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:28",
+          "timestamp": 1765450486361,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:23",
+          "timestamp": 1765450712404,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:28",
+          "timestamp": 1765450712407,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:23",
+          "timestamp": 1765451105498,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:33",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:23",
+          "timestamp": 1765451737024,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:33",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "– Bet-interactive-element": {
+      "selector": "– Bet",
+      "type": "interactive-element",
+      "text": "– Bet",
+      "firstSeenAt": 1765450314395,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:37",
+          "timestamp": 1765450314395,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:77",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:78",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:37",
+          "timestamp": 1765450486359,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:77",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:78",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:37",
+          "timestamp": 1765450712404,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:77",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:78",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:37",
+          "timestamp": 1765451105498,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:77",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:78",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:37",
+          "timestamp": 1765451737024,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:77",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:78",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Spin button-interactive-element": {
+      "selector": "Spin button",
+      "type": "interactive-element",
+      "text": "Spin button",
+      "firstSeenAt": 1765450314395,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:38",
+          "timestamp": 1765450314395,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:29",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:30",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:38",
+          "timestamp": 1765450486359,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:29",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:30",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:38",
+          "timestamp": 1765450712404,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:29",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:30",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:38",
+          "timestamp": 1765451105498,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:29",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:30",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth.setup.ts:38",
+          "timestamp": 1765451737024,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:29",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:30",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Sign In-interactive-element": {
+      "selector": "Sign In",
+      "type": "interactive-element",
+      "text": "Sign In",
+      "firstSeenAt": 1765450314397,
+      "lastSeenAt": 1765451737027,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:20",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:36",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:20",
+          "timestamp": 1765450486361,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:36",
+          "timestamp": 1765450486361,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:20",
+          "timestamp": 1765450712407,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:36",
+          "timestamp": 1765450712407,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:20",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:41",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:20",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:41",
+          "timestamp": 1765451737027,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Sign out-interactive-element": {
+      "selector": "Sign out",
+      "type": "interactive-element",
+      "text": "Sign out",
+      "firstSeenAt": 1765450314397,
+      "lastSeenAt": 1765451737027,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:33",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:38",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Register-interactive-element": {
+      "selector": "Register",
+      "type": "interactive-element",
+      "text": "Register",
+      "firstSeenAt": 1765450314397,
+      "lastSeenAt": 1765451737027,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:37",
+          "timestamp": 1765450314397,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\auth_tests.spec.ts:42",
+          "timestamp": 1765451105505,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    ".amt-clickable-element": {
+      "selector": ".amt",
+      "type": "clickable-element",
+      "text": ".amt",
+      "className": "amt",
+      "firstSeenAt": 1765450314399,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:17",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:48",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:67",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:100",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:17",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:48",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:67",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:100",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:17",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:48",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:67",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:100",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:17",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:48",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:67",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:100",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:17",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:48",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:67",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:100",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "🎰 No spins yet — try your luck!-interactive-element": {
+      "selector": "🎰 No spins yet — try your luck!",
+      "type": "interactive-element",
+      "text": "🎰 No spins yet — try your luck!",
+      "firstSeenAt": 1765450314399,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:26",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:51",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:26",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:51",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:26",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:51",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:26",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:51",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:26",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:51",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "🕹️ Use Free Spin-interactive-element": {
+      "selector": "🕹️ Use Free Spin",
+      "type": "interactive-element",
+      "text": "🕹️ Use Free Spin",
+      "firstSeenAt": 1765450314399,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:54",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:55",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:54",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:55",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:54",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:55",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:54",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:55",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:54",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:55",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "bet-amount-clickable-element": {
+      "selector": "bet-amount",
+      "type": "clickable-element",
+      "text": "bet-amount",
+      "firstSeenAt": 1765450314399,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:70",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "+ Bet-interactive-element": {
+      "selector": "+ Bet",
+      "type": "interactive-element",
+      "text": "+ Bet",
+      "firstSeenAt": 1765450314399,
+      "lastSeenAt": 1765451737029,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:84",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:85",
+          "timestamp": 1765450314399,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:84",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:85",
+          "timestamp": 1765450486363,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:84",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:85",
+          "timestamp": 1765450712409,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:84",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:85",
+          "timestamp": 1765451105512,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:84",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\game_tests.spec.ts:85",
+          "timestamp": 1765451737029,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Game-interactive-element": {
+      "selector": "Game",
+      "type": "interactive-element",
+      "text": "Game",
+      "firstSeenAt": 1765450314402,
+      "lastSeenAt": 1765451737034,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\landing_page.spec.ts:23",
+          "timestamp": 1765450314402,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\landing_page_tests.spec.ts:23",
+          "timestamp": 1765451737034,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "Account-interactive-element": {
+      "selector": "Account",
+      "type": "interactive-element",
+      "text": "Account",
+      "firstSeenAt": 1765450314402,
+      "lastSeenAt": 1765451737034,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\landing_page.spec.ts:27",
+          "timestamp": 1765450314402,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\landing_page_tests.spec.ts:27",
+          "timestamp": 1765451737034,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "SpinStorm-interactive-element": {
+      "selector": "SpinStorm",
+      "type": "interactive-element",
+      "text": "SpinStorm",
+      "firstSeenAt": 1765450314402,
+      "lastSeenAt": 1765451737034,
+      "discoveredIn": [
+        {
+          "url": "Group9\\fe\\playwright_tests\\landing_page.spec.ts:31",
+          "timestamp": 1765450314402,
+          "discoverySource": "static-analysis"
+        },
+        {
+          "url": "Group9\\fe\\playwright_tests\\landing_page_tests.spec.ts:31",
+          "timestamp": 1765451737034,
+          "discoverySource": "static-analysis"
+        }
+      ],
+      "coveredBy": [],
+      "isHidden": false
+    },
+    "email.com-clickable-element": {
+      "selector": "email.com",
+      "type": "clickable-element",
+      "text": "email.com",
+      "className": "com",
+      "firstSeenAt": 1765450316609,
+      "lastSeenAt": 1765451782069,
+      "discoveredIn": [
+        {
+          "url": "C:\\Users\\tekhi\\Documents\\GitHub\\CSC289",
+          "timestamp": 1765450316609,
+          "discoverySource": "test-execution"
+        }
+      ],
+      "coveredBy": [
+        {
+          "testFile": "C:\\Users\\tekhi\\Documents\\GitHub\\CSC289-Group9\\fe\\playwright_tests\\auth.setup.ts",
+          "testName": "authenticate",
+          "timestamp": 1765450316611,
+          "interactionType": "test-interaction"
+        },
+        {
+          "testFile": "C:\\Users\\tekhi\\Documents\\GitHub\\CSC289-Group9\\fe\\playwright_tests\\auth_tests.spec.ts",
+          "testName": "test sign in",
+          "timestamp": 1765450319369,
+          "interactionType": "test-interaction"
+        }
+      ],
+      "isHidden": false
+    }
+  },
+  "testCoverage": {
+    "C:\\Users\\tekhi\\Documents\\GitHub\\CSC289-Group9\\fe\\playwright_tests\\auth.setup.ts": [
+      "email.com-clickable-element"
+    ],
+    "C:\\Users\\tekhi\\Documents\\GitHub\\CSC289-Group9\\fe\\playwright_tests\\auth_tests.spec.ts": [
+      "email.com-clickable-element"
+    ]
+  },
+  "lastUpdated": 1765451782071
+}

@@ -31,7 +31,7 @@ def test_register_user(client):
     assert response.status_code == 201
 
 
-# tests the login route
+# tests the login route with a field missing
 def test_login_missing_user(user_client):
     # mssing field
     response = user_client.post(
